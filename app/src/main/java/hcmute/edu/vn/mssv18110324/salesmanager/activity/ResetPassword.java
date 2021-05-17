@@ -1,4 +1,4 @@
-package hcmute.edu.vn.mssv18110324.salesmanager;
+package hcmute.edu.vn.mssv18110324.salesmanager.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+
+import hcmute.edu.vn.mssv18110324.salesmanager.R;
 
 public class ResetPassword extends AppCompatActivity {
 
@@ -40,18 +42,18 @@ public class ResetPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (txtEmail.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.ResetPassword.this,"Please enter your email!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ResetPassword.this,"Please enter your email!",Toast.LENGTH_LONG).show();
                 } else {
                     String email = txtEmail.getText().toString().trim();
                     Backendless.UserService.restorePassword(email, new AsyncCallback<Void>() {
                         @Override
                         public void handleResponse(Void response) {
-                            Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.ResetPassword.this,"Reset instruction sent to email address!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ResetPassword.this,"Reset instruction sent to email address!",Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.ResetPassword.this,"Error: "+fault.getMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(ResetPassword.this,"Error: "+fault.getMessage(),Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -61,7 +63,7 @@ public class ResetPassword extends AppCompatActivity {
         txtBackToLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hcmute.edu.vn.mssv18110324.salesmanager.ResetPassword.this.finish();
+                ResetPassword.this.finish();
             }
         });
     }

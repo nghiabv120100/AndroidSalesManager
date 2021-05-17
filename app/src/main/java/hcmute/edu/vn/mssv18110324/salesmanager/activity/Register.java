@@ -1,4 +1,4 @@
-package hcmute.edu.vn.mssv18110324.salesmanager;
+package hcmute.edu.vn.mssv18110324.salesmanager.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -17,6 +17,8 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+
+import hcmute.edu.vn.mssv18110324.salesmanager.R;
 
 public class Register extends AppCompatActivity {
 
@@ -56,7 +58,7 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 if (txtName.getText().toString().trim().isEmpty() || txtEmail.getText().toString().trim().isEmpty() ||
                         txtPassword.getText().toString().trim().isEmpty() || txtConfirmPassword.getText().toString().trim().isEmpty() ) {
-                    Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.Register.this,"Please enter all details!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,"Please enter all details!",Toast.LENGTH_LONG).show();
                 } else {
                     if (txtPassword.getText().toString().trim().equals(txtConfirmPassword.getText().toString().trim())) {
                         String name = txtName.getText().toString().trim();
@@ -73,20 +75,20 @@ public class Register extends AppCompatActivity {
                             @Override
                             public void handleResponse(BackendlessUser response) {
                                 showProgress(false);
-                                Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.Register.this,"Successfully registered!",Toast.LENGTH_LONG).show();
-                                hcmute.edu.vn.mssv18110324.salesmanager.Register.this.finish();
+                                Toast.makeText(Register.this,"Successfully registered!",Toast.LENGTH_LONG).show();
+                                Register.this.finish();
                             }
 
                             @Override
                             public void handleFault(BackendlessFault fault) {
-                                Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.Register.this,"Error:"+fault.getMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(Register.this,"Error:"+fault.getMessage(),Toast.LENGTH_LONG).show();
                                 showProgress(false);
                             }
                         });
 
                     }
                     else {
-                        Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.Register.this,"Please make sure that your password and confirm password is the same!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Register.this,"Please make sure that your password and confirm password is the same!",Toast.LENGTH_LONG).show();
                     }
                 }
             }

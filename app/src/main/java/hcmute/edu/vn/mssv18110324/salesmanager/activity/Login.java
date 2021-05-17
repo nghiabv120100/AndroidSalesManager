@@ -1,4 +1,4 @@
-package hcmute.edu.vn.mssv18110324.salesmanager;
+package hcmute.edu.vn.mssv18110324.salesmanager.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -19,6 +19,10 @@ import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
+import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
+import hcmute.edu.vn.mssv18110324.salesmanager.utils.UserDatabaseHandler;
+
 public class Login extends AppCompatActivity {
 
     private View mProgressView;
@@ -29,14 +33,26 @@ public class Login extends AppCompatActivity {
     Button btnRegister, btnLogin;
     TextView txtForgotPassword;
 
+    UserDatabaseHandler db = new UserDatabaseHandler(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         addControls();
         addEvents();
+
+       /* User user = new User();
+        user.set_id(1);
+        user.set_email("nghiaclient@gmail.com");
+        user.set_role(0);
+        user.set_password("nghia123");
+        user.set_full_name("Bui Van Nghia");
+
+        db.addUser(user);*/
+
+
     }
     private void addControls() {
         mLoginFormView = findViewById(R.id.login_form);
@@ -54,25 +70,24 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (txtEmail.getText().toString().trim().isEmpty() || txtPassword.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.Login.this,"Please enter all fields!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Login.this,"Please enter all fields!",Toast.LENGTH_LONG).show();
                 } else {
                     String email = txtEmail.getText().toString().trim();
                     String password = txtPassword.getText().toString().trim();
                     showProgress(true);
-                    Backendless.UserService.login(email, password, new AsyncCallback<BackendlessUser>() {
-                        @Override
-                        public void handleResponse(BackendlessUser response) {
-                            Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.Login.this,"Logged successfully",Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(hcmute.edu.vn.mssv18110324.salesmanager.Login.this,MainActivity.class));
-                            hcmute.edu.vn.mssv18110324.salesmanager.Login.this.finish();
-                        }
 
-                        @Override
-                        public void handleFault(BackendlessFault fault) {
-                            Toast.makeText(hcmute.edu.vn.mssv18110324.salesmanager.Login.this,"Error: "+fault.getMessage(),Toast.LENGTH_LONG).show();
-                            showProgress(false);
-                        }
-                    });
+                    User user = db.getUserByEmail(email);
+
+                    if (user.get_email()==null) {
+                        Toast.makeText(Login.this,"Email incorrect",Toast.LENGTH_LONG).show();
+                        showProgress(false);
+                    } else if (user.get_email().equals(email) && user.get_password().equals(password) && user.get_role()==0) {
+                        Toast.makeText(Login.this,"Logged successfully",Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(Login.this,MainActivity.class));
+                    } else {
+                        Toast.makeText(Login.this,"Error: Logged fail",Toast.LENGTH_LONG).show();
+                        showProgress(false);
+                    }
                 }
 
             }
@@ -81,14 +96,14 @@ public class Login extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(hcmute.edu.vn.mssv18110324.salesmanager.Login.this, hcmute.edu.vn.mssv18110324.salesmanager.Register.class));
+                startActivity(new Intent(Login.this, Register.class));
             }
         });
 
         txtForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(hcmute.edu.vn.mssv18110324.salesmanager.Login.this, hcmute.edu.vn.mssv18110324.salesmanager.ResetPassword.class));
+                startActivity(new Intent(Login.this, ResetPassword.class));
             }
         });
     }

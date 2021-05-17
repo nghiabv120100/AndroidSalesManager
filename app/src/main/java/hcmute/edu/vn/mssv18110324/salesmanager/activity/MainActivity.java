@@ -1,8 +1,10 @@
-package hcmute.edu.vn.mssv18110324.salesmanager;
+package hcmute.edu.vn.mssv18110324.salesmanager.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import hcmute.edu.vn.mssv18110324.salesmanager.R;
 
 public class MainActivity extends AppCompatActivity {
 
