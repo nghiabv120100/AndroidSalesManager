@@ -52,6 +52,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
+            android:id="@+id/txtPhoneNumber"
+            android:hint="Please enter your phone number."
+            android:gravity="center_horizontal"
+            android:textSize="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
             android:id="@+id/txtEmail"
             android:hint="Please enter your email."
             android:gravity="center_horizontal"

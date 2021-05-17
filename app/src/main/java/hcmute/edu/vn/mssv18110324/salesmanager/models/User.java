@@ -11,6 +11,8 @@ public class User {
     private Integer _status;
 
     public User() {
+        this._role=0;
+        this._status=1;
     }
 
     public User(Integer _id, String _full_name, String _email, String _phone_number, String _password, Integer _role, Integer _status) {

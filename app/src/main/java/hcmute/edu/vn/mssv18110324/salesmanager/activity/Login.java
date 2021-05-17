@@ -84,6 +84,7 @@ public class Login extends AppCompatActivity {
                     } else if (user.get_email().equals(email) && user.get_password().equals(password) && user.get_role()==0) {
                         Toast.makeText(Login.this,"Logged successfully",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Login.this,MainActivity.class));
+                        showProgress(false);
                     } else {
                         Toast.makeText(Login.this,"Error: Logged fail",Toast.LENGTH_LONG).show();
                         showProgress(false);

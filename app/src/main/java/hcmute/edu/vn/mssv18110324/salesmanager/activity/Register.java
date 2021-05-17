@@ -3,6 +3,7 @@ package hcmute.edu.vn.mssv18110324.salesmanager.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
+import hcmute.edu.vn.mssv18110324.salesmanager.utils.UserDatabaseHandler;
 
 public class Register extends AppCompatActivity {
 
@@ -26,8 +29,10 @@ public class Register extends AppCompatActivity {
     private View mLoginFormView;
     private TextView tvLoad;
 
-    EditText txtName,txtEmail,txtPassword,txtConfirmPassword;
+    EditText txtName,txtEmail,txtPassword,txtConfirmPassword,txtPhoneNumber;
     Button btnRegister;
+
+    UserDatabaseHandler db = new UserDatabaseHandler(this);
 
 
     @Override
@@ -48,7 +53,7 @@ public class Register extends AppCompatActivity {
         txtEmail = findViewById(R.id.txtEmail);
         txtPassword = findViewById(R.id.txtPassword);
         txtConfirmPassword = findViewById(R.id.txtConfirmPassword);
-
+        txtPhoneNumber = findViewById(R.id.txtPhoneNumber);
         btnRegister = findViewById(R.id.btnRegister);
     }
 
@@ -63,14 +68,30 @@ public class Register extends AppCompatActivity {
                     if (txtPassword.getText().toString().trim().equals(txtConfirmPassword.getText().toString().trim())) {
                         String name = txtName.getText().toString().trim();
                         String email = txtEmail.getText().toString().trim();
+                        String phoneNumber = txtPhoneNumber.getText().toString().trim();
                         String password = txtPassword.getText().toString().trim();
 
-                        BackendlessUser user = new BackendlessUser();
-                        user.setEmail(email);
-                        user.setPassword(password);
-                        user.setProperty("name",name);
+                        User user = new User();
+                        user.set_full_name(name);
+                        user.set_password(password);
+                        user.set_phone_number(phoneNumber);
+                        user.set_email(email);
+
 
                         showProgress(true);
+
+                        int result= db.addUser(user);
+
+                        if (result ==1 ) {
+                            showProgress(false);
+                            Toast.makeText(Register.this,"Successfully registered!",Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(Register.this,Login.class));
+                        } else {
+                            Toast.makeText(Register.this,"fail registered",Toast.LENGTH_LONG).show();
+                            showProgress(false);
+                        }
+
+                        /*
                         Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
                             @Override
                             public void handleResponse(BackendlessUser response) {
@@ -84,7 +105,7 @@ public class Register extends AppCompatActivity {
                                 Toast.makeText(Register.this,"Error:"+fault.getMessage(),Toast.LENGTH_LONG).show();
                                 showProgress(false);
                             }
-                        });
+                        });*/
 
                     }
                     else {

@@ -3,6 +3,7 @@
     package="hcmute.edu.vn.mssv18110324.salesmanager">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ApplicationClass"
         android:allowBackup="true"
@@ -11,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SalesManager">
-
-        <activity android:name=".activity.ResetPassword"></activity>
+        <activity android:name=".activity.admin.HomeActivity"></activity>
+        <activity android:name=".activity.ResetPassword" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.Login">
             <intent-filter>

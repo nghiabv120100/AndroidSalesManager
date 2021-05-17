@@ -50,22 +50,29 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUser(User user) {
+    public int addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
+        try {
 
-        ContentValues cv = new ContentValues();
-        // Put data
-        cv.put(KEY_ID,user.get_id());
-        cv.put(KEY_FULL_NAME,user.get_full_name());
-        cv.put(KEY_EMAIL,user.get_email());
-        cv.put(KEY_PHONE_NUMBER,user.get_phone_number());
-        cv.put(KEY_PASSWORD,user.get_password());
-        cv.put(KEY_ROLE,user.get_role());
-        cv.put(KEY_STATUS,user.get_status());
 
-        //insert data into sqlite
-        db.insert(TABLE_USER,null,cv);
-        db.close();
+            ContentValues cv = new ContentValues();
+            // Put data
+            cv.put(KEY_ID,user.get_id());
+            cv.put(KEY_FULL_NAME,user.get_full_name());
+            cv.put(KEY_EMAIL,user.get_email());
+            cv.put(KEY_PHONE_NUMBER,user.get_phone_number());
+            cv.put(KEY_PASSWORD,user.get_password());
+            cv.put(KEY_ROLE,user.get_role());
+            cv.put(KEY_STATUS,user.get_status());
+
+            //insert data into sqlite
+            db.insert(TABLE_USER,null,cv);
+            db.close();
+            return 1;
+        } catch (Exception e) {
+            db.close();
+            return -1;
+        }
     }
 
     public List<User> getAllUser() {
