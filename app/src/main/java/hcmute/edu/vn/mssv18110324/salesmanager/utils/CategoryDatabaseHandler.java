@@ -15,7 +15,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 
 public class CategoryDatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "salesManager";
     private static final String TABLE_CATEGORY = "category";
     private static final String KEY_ID ="_id";
@@ -52,6 +52,7 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
             cv.put(KEY_NAME,category.get_name());
             cv.put(KEY_STATUS,category.get_status());
             db.insert(TABLE_CATEGORY,null,cv);
+            db.close();
             return 1;
 
         } catch (Exception ex) {
@@ -60,12 +61,17 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public List<Category> findAllCategory() {
-        List<Category> lstCategory = new ArrayList<Category>();
+    public ArrayList<Category> findAllCategory() {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        ArrayList<Category> lstCategory = new ArrayList<Category>();
 
         String query = "Select * from "+ TABLE_CATEGORY;
-        SQLiteDatabase db = this.getWritableDatabase();
+
+
         Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
 
         int iID = cursor.getColumnIndex(KEY_ID);
         int iImage = cursor.getColumnIndex(KEY_IMAGE);
@@ -80,6 +86,7 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
             category.set_status(cursor.getInt(iStatus));
             lstCategory.add(category);
         }
+        db.close();
         return lstCategory;
     }
 }

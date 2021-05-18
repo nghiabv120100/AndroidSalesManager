@@ -15,7 +15,7 @@ import java.util.List;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
 
 public class UserDatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "salesManager";
     private static final String TABLE_USER = "user";
     private static final String KEY_ID ="_id";

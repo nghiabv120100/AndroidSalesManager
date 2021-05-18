@@ -20,6 +20,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.activity.client.HomeActivity;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.UserDatabaseHandler;
 
@@ -83,7 +84,7 @@ public class Login extends AppCompatActivity {
                         showProgress(false);
                     } else if (user.get_email().equals(email) && user.get_password().equals(password) && user.get_role()==0) {
                         Toast.makeText(Login.this,"Logged successfully",Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(Login.this,MainActivity.class));
+                        startActivity(new Intent(Login.this, HomeActivity.class));
                         showProgress(false);
                     } else {
                         Toast.makeText(Login.this,"Error: Logged fail",Toast.LENGTH_LONG).show();

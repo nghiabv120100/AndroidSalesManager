@@ -1,14 +1,26 @@
-package hcmute.edu.vn.mssv18110324.salesmanager.activity.admin;
+package hcmute.edu.vn.mssv18110324.salesmanager.activity.client;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import hcmute.edu.vn.mssv18110324.salesmanager.ApplicationClass;
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.adapter.CategoryAdapter;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
+import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +33,7 @@ public class ListCategoryFrag extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Context activity;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -28,6 +41,12 @@ public class ListCategoryFrag extends Fragment {
 
     public ListCategoryFrag() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        activity=context;
     }
 
     /**
@@ -48,6 +67,15 @@ public class ListCategoryFrag extends Fragment {
         return fragment;
     }
 
+    RecyclerView recyclerView;
+    RecyclerView.Adapter myAdapter;
+    RecyclerView.LayoutManager manager;
+    View view;
+    ArrayList<Category> lstCategory;
+
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +89,28 @@ public class ListCategoryFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_category, container, false);
+        view= inflater.inflate(R.layout.fragment_list_category, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        CategoryDatabaseHandler db = new CategoryDatabaseHandler(activity);
+
+        recyclerView =  view.findViewById(R.id.lstCategory);
+        recyclerView.setHasFixedSize(true);
+        manager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(manager);
+
+        lstCategory = new ArrayList<Category>();
+
+        lstCategory = db.findAllCategory();
+
+        myAdapter = new CategoryAdapter(this.getActivity(),lstCategory);
+
+        recyclerView.setAdapter(myAdapter);
+
     }
 }

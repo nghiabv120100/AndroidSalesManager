@@ -5,26 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.admin.HomeActivity">
+    tools:context=".activity.client.HomeActivity">
 
     <fragment
         android:id="@+id/fragHome"
         tools:layout="@layout/fragment_home"
-        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.admin.HomeFrag"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.HomeFrag"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="1"/>
     <fragment
         android:id="@+id/fragListCategory"
         tools:layout="@layout/fragment_list_category"
-        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.admin.ListCategoryFrag"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.ListCategoryFrag"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="1"/>
     <fragment
         android:id="@+id/fragNavbar"
         tools:layout="@layout/fragment_navbar"
-        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.admin.NavbarFlag"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.NavbarFlag"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         />
