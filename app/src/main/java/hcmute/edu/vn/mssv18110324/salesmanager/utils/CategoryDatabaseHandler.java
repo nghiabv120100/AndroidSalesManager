@@ -15,7 +15,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 
 public class CategoryDatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "salesManager";
     private static final String TABLE_CATEGORY = "category";
     private static final String KEY_ID ="_id";

@@ -22,6 +22,13 @@
         android:layout_height="1dp"
         android:layout_weight="1"/>
     <fragment
+        android:id="@+id/fragListProduct"
+        android:layout_width="match_parent"
+        tools:layout="@layout/fragment_list_product"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.ListProductFrag"
+        android:layout_weight="1"
+        android:layout_height="1dp"/>
+    <fragment
         android:id="@+id/fragNavbar"
         tools:layout="@layout/fragment_navbar"
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.NavbarFlag"

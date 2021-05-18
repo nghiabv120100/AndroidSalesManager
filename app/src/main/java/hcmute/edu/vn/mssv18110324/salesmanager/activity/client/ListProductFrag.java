@@ -13,40 +13,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
 import hcmute.edu.vn.mssv18110324.salesmanager.adapter.CategoryAdapter;
+import hcmute.edu.vn.mssv18110324.salesmanager.adapter.ProductAdapter;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
+import hcmute.edu.vn.mssv18110324.salesmanager.utils.ProductDatabaseHandler;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ListCategoryFrag#newInstance} factory method to
+ * Use the {@link ListProductFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ListCategoryFrag extends Fragment {
+public class ListProductFrag extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private Context activity;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public ListCategoryFrag() {
+    public ListProductFrag() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        activity=context;
     }
 
     /**
@@ -55,11 +50,11 @@ public class ListCategoryFrag extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ListCategoryFrag.
+     * @return A new instance of fragment ListProductFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListCategoryFrag newInstance(String param1, String param2) {
-        ListCategoryFrag fragment = new ListCategoryFrag();
+    public static ListProductFrag newInstance(String param1, String param2) {
+        ListProductFrag fragment = new ListProductFrag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,10 +66,14 @@ public class ListCategoryFrag extends Fragment {
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager manager;
     View view;
-    ArrayList<Category> lstCategory;
+    ArrayList<Product> lstProduct;
+    Context activity;
 
-
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.activity=context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,30 +88,28 @@ public class ListCategoryFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view= inflater.inflate(R.layout.fragment_list_category, container, false);
+        view= inflater.inflate(R.layout.fragment_list_product, container, false);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        ProductDatabaseHandler db = new ProductDatabaseHandler(activity);
 
-        CategoryDatabaseHandler db = new CategoryDatabaseHandler(activity);
-
-        recyclerView =  view.findViewById(R.id.lstCategory);
+        recyclerView =  view.findViewById(R.id.lstProduct);
         recyclerView.setHasFixedSize(true);
 
-//        manager = new GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL,false);
-        manager = new LinearLayoutManager(this.getActivity());
+        manager = new GridLayoutManager(activity,2);
+//        manager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(manager);
 
-        lstCategory = new ArrayList<Category>();
+        lstProduct = new ArrayList<Product>();
 
-        lstCategory = db.findAllCategory();
+        lstProduct = db.findAllProduct();
 
-        myAdapter = new CategoryAdapter(activity,lstCategory);
+        myAdapter = new ProductAdapter(this.getActivity(),lstProduct);
 
         recyclerView.setAdapter(myAdapter);
-
     }
 }

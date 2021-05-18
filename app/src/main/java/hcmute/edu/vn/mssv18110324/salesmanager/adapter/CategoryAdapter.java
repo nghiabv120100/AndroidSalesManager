@@ -1,6 +1,8 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +20,15 @@ import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     ArrayList<Category> lstCategory;
+    ItemClicked activity;
+
+    public interface ItemClicked {
+        void OnItemClicked(int index);
+    }
 
     public CategoryAdapter(Context context, ArrayList<Category> lstCategory) {
         this.lstCategory = lstCategory;
+        activity =(ItemClicked) context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -34,7 +42,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    activity.OnItemClicked(1);
                 }
             });
 
@@ -51,7 +59,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
         holder.itemView.setTag(lstCategory.get(position));
-        holder.imgCategory.setImageResource(R.drawable.home_icon);
+        holder.imgCategory.setImageResource(R.drawable.milk);
         holder.txtCategory.setText(lstCategory.get(position).get_name());
     }
 

@@ -9,23 +9,32 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import hcmute.edu.vn.mssv18110324.salesmanager.R;
-import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
-import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
+import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.adapter.CategoryAdapter;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
+import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
+import hcmute.edu.vn.mssv18110324.salesmanager.utils.ProductDatabaseHandler;
+
+public class HomeActivity extends AppCompatActivity implements CategoryAdapter.ItemClicked {
     ImageButton btnToggle,btnHome;
 
 
     CategoryDatabaseHandler db = new CategoryDatabaseHandler(this);
+    ProductDatabaseHandler dbProduct = new ProductDatabaseHandler(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         addControl();
         addEvent();
+        ArrayList<Product> lstPro= dbProduct.findByCategoryID(1);
         Toast.makeText(this,"Done",Toast.LENGTH_LONG).show();
-        showFragmentHome();
+
+
+        showFragmentProduct();
     }
 
     private void addControl() {
@@ -53,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
                 .hide(manager.findFragmentById(R.id.fragListCategory))
+                .hide(manager.findFragmentById(R.id.fragListProduct))
                 .show(manager.findFragmentById(R.id.fragHome))
                 .addToBackStack(null)
                 .commit();
@@ -61,17 +71,24 @@ public class HomeActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
                 .hide(manager.findFragmentById(R.id.fragHome))
+                .hide(manager.findFragmentById(R.id.fragListProduct))
                 .show(manager.findFragmentById(R.id.fragListCategory))
                 .addToBackStack(null)
                 .commit();
     }
+    public void showFragmentProduct() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+                .hide(manager.findFragmentById(R.id.fragListCategory))
+                .hide(manager.findFragmentById(R.id.fragHome))
+                .show(manager.findFragmentById(R.id.fragListProduct))
+                .addToBackStack(null)
+                .commit();
+    }
 
-    private void addCategory() {
-        Category category = new Category();
-        category.set_id(1);
-        category.set_name("Đồ uống");
-        category.set_status(1);
-        category.set_image("image_cate");
-        db.addCategory(category);
+
+    @Override
+    public void OnItemClicked(int index) {
+        showFragmentProduct();
     }
 }
