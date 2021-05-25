@@ -5,9 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 
 public class CategoryDatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "salesManager";
     private static final String TABLE_CATEGORY = "category";
     private static final String KEY_ID ="_id";
@@ -30,7 +33,7 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE = "Create Table "+TABLE_CATEGORY+"("+KEY_ID+" Integer Primary Key ,"
-                + KEY_IMAGE+ " Text, "+ KEY_NAME+ " Text, "+ KEY_STATUS+ " Integer) ";
+                + KEY_IMAGE+ " Blob, "+ KEY_NAME+ " Text, "+ KEY_STATUS+ " Integer) ";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -46,9 +49,14 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
     public int addCategory(Category category) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
+            // convert bitmap to byte
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            category.get_image().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+            byte[] bytesImage = byteArrayOutputStream.toByteArray();
+
             ContentValues cv = new ContentValues();
             cv.put(KEY_ID,category.get_id());
-            cv.put(KEY_IMAGE,category.get_image());
+            cv.put(KEY_IMAGE,bytesImage);
             cv.put(KEY_NAME,category.get_name());
             cv.put(KEY_STATUS,category.get_status());
             db.insert(TABLE_CATEGORY,null,cv);
@@ -81,7 +89,13 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
         for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
             Category category = new Category();
             category.set_id(cursor.getInt(iID));
-            category.set_image(cursor.getString(iImage));
+
+            // convert byte to bitmap
+            byte[] bytesImage =cursor.getBlob(iImage);
+            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+            category.set_image(bitmapImage);
+
+
             category.set_name(cursor.getString(iName));
             category.set_status(cursor.getInt(iStatus));
             lstCategory.add(category);

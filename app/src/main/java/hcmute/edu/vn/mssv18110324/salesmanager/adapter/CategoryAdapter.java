@@ -60,6 +60,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
         holder.itemView.setTag(lstCategory.get(position));
         holder.imgCategory.setImageResource(R.drawable.milk);
+        holder.imgCategory.setImageBitmap(lstCategory.get(position).get_image());
         holder.txtCategory.setText(lstCategory.get(position).get_name());
     }
 

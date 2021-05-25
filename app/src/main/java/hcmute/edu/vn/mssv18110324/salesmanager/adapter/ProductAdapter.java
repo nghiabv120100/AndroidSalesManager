@@ -53,6 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
         holder.itemView.setTag(lstProduct.get(position));
         holder.txtPriceProduct.setText(lstProduct.get(position).get_price().toString());
+        holder.imgImageProduct.setImageBitmap(lstProduct.get(position).get_image());
         holder.txtNameProduct.setText(lstProduct.get(position).get_name());
     }
 

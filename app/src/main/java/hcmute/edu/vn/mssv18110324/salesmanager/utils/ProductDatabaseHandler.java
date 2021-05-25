@@ -5,16 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 
 public class ProductDatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 11;
     private static final String DATABASE_NAME = "salesManager";
     private static final String TABLE_PRODUCT = "product";
     private static final String KEY_ID ="_id";
@@ -32,7 +35,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query ="Create Table "+TABLE_PRODUCT+"("+KEY_ID +" Integer Primary Key,"+KEY_NAME+" Text,"
-                +KEY_QUANTITY+" Integer,"+KEY_PRICE+" Integer,"+KEY_DESCRIBE+" Text,"+KEY_IMAGE+" Text,"
+                +KEY_QUANTITY+" Integer,"+KEY_PRICE+" Integer,"+KEY_DESCRIBE+" Text,"+KEY_IMAGE+" Blob,"
                 +KEY_CATEGORY_ID+" Integer,"+KEY_STATUS+" Integer)";
         db.execSQL(query);
     }
@@ -49,13 +52,18 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
     public int addProduct(Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
+            // convert bitmap to byte
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            product.get_image().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+            byte[] bytesImage = byteArrayOutputStream.toByteArray();
+
             ContentValues cv = new ContentValues();
             cv.put(KEY_ID, product.get_id());
             cv.put(KEY_NAME,product.get_name());
             cv.put(KEY_QUANTITY,product.get_quantity());
             cv.put(KEY_PRICE,product.get_price());
             cv.put(KEY_DESCRIBE,product.get_describe());
-            cv.put(KEY_IMAGE,product.get_image());
+            cv.put(KEY_IMAGE,bytesImage);
             cv.put(KEY_CATEGORY_ID,product.get_category_id());
             cv.put(KEY_STATUS,product.get_status());
 
@@ -86,7 +94,11 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             product.set_name(cursor.getString(iName));
             product.set_price(cursor.getInt(iPrice));
             product.set_describe(cursor.getString(iDescribe));
-            product.set_image(cursor.getString(iImage));
+
+            // convert byte to bitmap
+            byte[] bytesImage =cursor.getBlob(iImage);
+            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+            product.set_image(bitmapImage);
             product.set_category_id(cursor.getInt(iCategoryID));
             product.set_status(cursor.getInt(iStatus));
             lstProduct.add(product);
@@ -114,7 +126,12 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             product.set_name(cursor.getString(iName));
             product.set_price(cursor.getInt(iPrice));
             product.set_describe(cursor.getString(iDescribe));
-            product.set_image(cursor.getString(iImage));
+
+            // convert byte to bitmap
+            byte[] bytesImage =cursor.getBlob(iImage);
+            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+            product.set_image(bitmapImage);
+
             product.set_category_id(cursor.getInt(iCategoryID));
             product.set_status(cursor.getInt(iStatus));
             lstProduct.add(product);

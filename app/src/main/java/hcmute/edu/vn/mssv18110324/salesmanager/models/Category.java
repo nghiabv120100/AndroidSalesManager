@@ -1,15 +1,17 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.models;
 
+import android.graphics.Bitmap;
+
 public class Category {
     private Integer _id;
-    private String _image;
+    private Bitmap _image;
     private String _name;
     private Integer _status;
 
     public Category() {
     }
 
-    public Category(Integer _id, String _image, String _name, Integer _status) {
+    public Category(Integer _id, Bitmap _image, String _name, Integer _status) {
         this._id = _id;
         this._image = _image;
         this._name = _name;
@@ -24,11 +26,11 @@ public class Category {
         this._id = _id;
     }
 
-    public String get_image() {
+    public Bitmap get_image() {
         return _image;
     }
 
-    public void set_image(String _image) {
+    public void set_image(Bitmap _image) {
         this._image = _image;
     }
 
