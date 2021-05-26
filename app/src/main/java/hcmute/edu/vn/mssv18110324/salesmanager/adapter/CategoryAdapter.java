@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
@@ -23,7 +24,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     ItemClicked activity;
 
     public interface ItemClicked {
-        void OnItemClicked(int index);
+        void OnItemClicked(int id);
     }
 
     public CategoryAdapter(Context context, ArrayList<Category> lstCategory) {
@@ -42,7 +43,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    activity.OnItemClicked(1);
+                    int id = lstCategory.get(lstCategory.indexOf(v.getTag())).get_id();
+                    activity.OnItemClicked(id);
                 }
             });
 

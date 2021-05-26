@@ -1,5 +1,6 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,15 @@ import hcmute.edu.vn.mssv18110324.salesmanager.R;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
-    ArrayList<Product> lstProduct;
+    public static ArrayList<Product> lstProduct;
+    ProductClicked activity;
 
+    public interface ProductClicked {
+        void OnProductClicked(int index);
+    }
     public ProductAdapter(Context context, ArrayList<Product> lstProduct) {
         this.lstProduct = lstProduct;
+        activity = (ProductClicked) context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -36,7 +42,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    activity.OnProductClicked(lstProduct.indexOf(itemView.getTag()));
                 }
             });
         }

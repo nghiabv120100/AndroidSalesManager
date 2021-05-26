@@ -3,6 +3,7 @@ package hcmute.edu.vn.mssv18110324.salesmanager.activity.client;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -14,20 +15,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
 import hcmute.edu.vn.mssv18110324.salesmanager.adapter.CategoryAdapter;
+import hcmute.edu.vn.mssv18110324.salesmanager.adapter.ProductAdapter;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.InsertData;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.ProductDatabaseHandler;
 
-public class HomeActivity extends AppCompatActivity implements CategoryAdapter.ItemClicked {
+public class HomeActivity extends AppCompatActivity implements CategoryAdapter.ItemClicked, ProductAdapter.ProductClicked {
     ImageButton btnToggle,btnHome;
+
+    //Widgets of Product Detail Fragment
+    ImageView imgProductDetail;
+    TextView txtNameProductDetail, txtStatus, txtDescription;
+    Button btnAddToCart;
+    //
+    // Widgets of List Product Fragment
+    RecyclerView.Adapter myAdapter;
+    RecyclerView recyclerView;
+    //
 
 
     CategoryDatabaseHandler dbCategory =  new CategoryDatabaseHandler(this);
@@ -57,7 +71,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                navController.showFragmentProduct();
+                navController.showFragmentCart();
                 return false;
             }
         });
@@ -66,8 +80,20 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
     }
 
     private void addControl() {
+        //Widget of Navbar
         btnToggle = findViewById(R.id.btnToggle);
         btnHome = findViewById(R.id.btnHome);
+        //
+        //Widgets of Fragment Product Detail
+        imgProductDetail = findViewById(R.id.imgProductDetail);
+        txtNameProductDetail = findViewById(R.id.txtNameProductDetail);
+        txtStatus = findViewById(R.id.txtStatus);
+        txtDescription = findViewById(R.id.txtDescription);
+        btnAddToCart = findViewById(R.id.btnAddToCart);
+        //
+        //Widgets of Fragment List Product
+        recyclerView = findViewById(R.id.lstProduct);
+        //
     }
 
     private void addEvent() {
@@ -88,8 +114,28 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
 
 
     @Override
-    public void OnItemClicked(int index) {
-        navController.showFragmentProduct();
+    public void OnItemClicked(int id) {
+        ArrayList<Product>  arrayList= new ArrayList<Product>();
+        arrayList = dbProduct.findByCategoryID(id);
+
+        if (arrayList==null || arrayList.isEmpty()) {
+            Toast.makeText(this,"Loại hàng này hiện không còn sản phẩm",Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            myAdapter = new ProductAdapter(this,arrayList);
+            recyclerView.setAdapter(myAdapter);
+            navController.showFragmentProduct();
+        }
+    }
+    @Override
+    public void OnProductClicked(int index) {
+        Product product= ProductAdapter.lstProduct.get(index);
+        imgProductDetail.setImageBitmap(product.get_image());
+        txtNameProductDetail.setText(product.get_name());
+//        txtStatus.setText();
+        txtDescription.setText(product.get_describe());
+
+        navController.showFragmentDetailProduct();
     }
 
 ///Insert data
@@ -120,4 +166,6 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
 
 
     }
+
+
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,5 +112,13 @@ public class ListProductFrag extends Fragment {
         myAdapter = new ProductAdapter(this.getActivity(),lstProduct);
 
         recyclerView.setAdapter(myAdapter);
+
+        Log.d("onActivityCreated: ","onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("onStart: ","OnStart");
     }
 }

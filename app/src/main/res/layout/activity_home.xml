@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.client.HomeActivity">
+    <fragment
+        android:id="@+id/fragDetailProduct"
+        tools:layout="@layout/fragment_product_detail"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.ProductDetailFrag"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        />
+    <fragment
+        android:id="@+id/fragCart"
+        tools:layout="@layout/fragment_cart"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.CartFrag"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="1dp"/>
 
     <fragment
         android:id="@+id/fragHome"
