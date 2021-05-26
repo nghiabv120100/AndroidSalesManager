@@ -1,5 +1,6 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.activity.client;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -8,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,8 +30,10 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
     ImageButton btnToggle,btnHome;
 
 
-    CategoryDatabaseHandler dbCategory;
-    ProductDatabaseHandler dbProduct;
+    CategoryDatabaseHandler dbCategory =  new CategoryDatabaseHandler(this);
+    ProductDatabaseHandler dbProduct  = new ProductDatabaseHandler(this);
+    NavController navController = new NavController(getSupportFragmentManager());
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +42,27 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         addControl();
         addEvent();
 
-        dbCategory = new CategoryDatabaseHandler(this);
-        dbProduct = new ProductDatabaseHandler(this);
+        navController.showFragmentProduct();
 
-        Bitmap bitmapCategory = ((BitmapDrawable)getResources().getDrawable(R.drawable.cream)).getBitmap();
-        Bitmap bitmapProduct = BitmapFactory.decodeResource(getResources(), R.drawable.poster);
-        addCategory(bitmapCategory);
+    }
 
-        addProduct(bitmapProduct);
-//        ArrayList<Product> lstPro= dbProduct.findByCategoryID(1);
-        Toast.makeText(this,"Done",Toast.LENGTH_LONG).show();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
 
-
-        showFragmentProduct();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                navController.showFragmentProduct();
+                return false;
+            }
+        });
+        return true;
+//        return super.onOptionsItemSelected(item);
     }
 
     private void addControl() {
@@ -61,50 +74,22 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragmentHome();
+                navController.showFragmentHome();
             }
         });
 
         btnToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFragmentListCategory();
+                navController.showFragmentListCategory();
             }
         });
-    }
-
-    public void showFragmentHome() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .hide(manager.findFragmentById(R.id.fragListCategory))
-                .hide(manager.findFragmentById(R.id.fragListProduct))
-                .show(manager.findFragmentById(R.id.fragHome))
-                .addToBackStack(null)
-                .commit();
-    }
-    public void showFragmentListCategory() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .hide(manager.findFragmentById(R.id.fragHome))
-                .hide(manager.findFragmentById(R.id.fragListProduct))
-                .show(manager.findFragmentById(R.id.fragListCategory))
-                .addToBackStack(null)
-                .commit();
-    }
-    public void showFragmentProduct() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction()
-                .hide(manager.findFragmentById(R.id.fragListCategory))
-                .hide(manager.findFragmentById(R.id.fragHome))
-                .show(manager.findFragmentById(R.id.fragListProduct))
-                .addToBackStack(null)
-                .commit();
     }
 
 
     @Override
     public void OnItemClicked(int index) {
-        showFragmentProduct();
+        navController.showFragmentProduct();
     }
 
 ///Insert data
