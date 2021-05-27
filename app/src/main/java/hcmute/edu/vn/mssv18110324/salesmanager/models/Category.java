@@ -9,6 +9,7 @@ public class Category {
     private Integer _status;
 
     public Category() {
+        this._status=1;
     }
 
     public Category(Integer _id, Bitmap _image, String _name, Integer _status) {

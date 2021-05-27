@@ -14,6 +14,7 @@ public class Product {
     private Integer _status;
 
     public Product() {
+        this._status=1;
     }
 
     public Product(Integer _id, String _name, Integer _quantity, Integer _price, String _describe, Bitmap _image, Integer _category_id, Integer _status) {
@@ -90,4 +91,16 @@ public class Product {
     public void set_status(Integer _status) {
         this._status = _status;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "_id=" + _id +
+                ", _name='" + _name + '\'' +
+                ", _quantity=" + _quantity +
+                ", _price=" + _price +
+                '}';
+    }
+
+    // Equal method
 }

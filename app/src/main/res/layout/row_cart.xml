@@ -23,7 +23,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:productImage="@{cartItem.product.imageUrl}"
+
             />
 
 
@@ -60,7 +60,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView"
             android:entries="@array/quantity_string_array"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:setVal="@{cartItem.quantity}"
+
             />
 
 

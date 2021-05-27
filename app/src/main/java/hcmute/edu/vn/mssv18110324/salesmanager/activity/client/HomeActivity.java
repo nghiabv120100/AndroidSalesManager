@@ -3,6 +3,8 @@ package hcmute.edu.vn.mssv18110324.salesmanager.activity.client;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,15 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
 import hcmute.edu.vn.mssv18110324.salesmanager.adapter.CategoryAdapter;
 import hcmute.edu.vn.mssv18110324.salesmanager.adapter.ProductAdapter;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.CartItem;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.InsertData;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.ProductDatabaseHandler;
+import hcmute.edu.vn.mssv18110324.salesmanager.viewmodels.ShopViewModel;
 
 public class HomeActivity extends AppCompatActivity implements CategoryAdapter.ItemClicked, ProductAdapter.ProductClicked {
     ImageButton btnToggle,btnHome;
@@ -43,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
     RecyclerView recyclerView;
     //
 
-
+    ShopViewModel shopViewModel = new ShopViewModel();
     CategoryDatabaseHandler dbCategory =  new CategoryDatabaseHandler(this);
     ProductDatabaseHandler dbProduct  = new ProductDatabaseHandler(this);
     NavController navController = new NavController(getSupportFragmentManager());
@@ -55,6 +61,14 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         setContentView(R.layout.activity_home);
         addControl();
         addEvent();
+
+        shopViewModel = new ViewModelProvider(this).get(ShopViewModel.class);
+        shopViewModel.getCart().observe(this, new Observer<List<CartItem>>() {
+            @Override
+            public void onChanged(List<CartItem> cartItems) {
+                Log.d("onChanged",cartItems.size()+"");
+            }
+        });
 
         navController.showFragmentProduct();
 
@@ -110,6 +124,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
                 navController.showFragmentListCategory();
             }
         });
+
+
     }
 
 
@@ -134,6 +150,15 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         txtNameProductDetail.setText(product.get_name());
 //        txtStatus.setText();
         txtDescription.setText(product.get_describe());
+
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("addToCart",product.toString());
+                boolean isAdded = shopViewModel.addItemToCart(product);
+                Log.d("addProduct",product.get_name() + "is added");
+            }
+        });
 
         navController.showFragmentDetailProduct();
     }
