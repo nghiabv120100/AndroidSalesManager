@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-        <variable
-            name="cartItem"
-            type="com.example.shoppingcart.models.CartItem" />
-
-    </data>
+    xmlns:tools="http://schemas.android.com/tools">-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <ImageView
             android:id="@+id/productImageView"
             android:layout_width="96dp"
@@ -37,7 +32,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/productImageView"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{cartItem.product.name}" />
+            android:text="" />
 
         <TextView
             android:id="@+id/textView"
@@ -72,10 +67,12 @@
             android:layout_marginLeft="32dp"
             android:background="?android:attr/selectableItemBackground"
             android:padding="8dp"
+            android:src="@drawable/ic_baseline_delete_24"
+
             app:layout_constraintBottom_toBottomOf="@+id/quantitySpinner"
             app:layout_constraintStart_toEndOf="@+id/quantitySpinner"
             app:layout_constraintTop_toTopOf="@+id/quantitySpinner"
-            app:srcCompat="@drawable/ic_baseline_delete_24" />
+             />
 
         <TextView
             android:id="@+id/productTotalPriceTextView"
@@ -87,9 +84,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:text="@{String.valueOf(cartItem.product.price * cartItem.quantity)}" />
-
+            android:text="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+<!--</layout>-->
 

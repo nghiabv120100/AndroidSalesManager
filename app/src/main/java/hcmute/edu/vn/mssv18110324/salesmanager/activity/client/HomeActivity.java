@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         shopViewModel.getCart().observe(this, new Observer<List<CartItem>>() {
             @Override
             public void onChanged(List<CartItem> cartItems) {
+
                 Log.d("onChanged",cartItems.size()+"");
             }
         });
@@ -154,9 +157,18 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("addToCart",product.toString());
                 boolean isAdded = shopViewModel.addItemToCart(product);
-                Log.d("addProduct",product.get_name() + "is added");
+                if (isAdded) {
+                    Snackbar.make(findViewById(android.R.id.content).getRootView(),product.get_name()+" đã được thêm vào giỏ hàng",Snackbar.LENGTH_LONG)
+                            .setAction("Checkout", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    navController.showFragmentCart();
+                                }
+                            }).show();
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content).getRootView(),"Sản phẩm đã đạt giới hạn trong giỏ hàng",Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
