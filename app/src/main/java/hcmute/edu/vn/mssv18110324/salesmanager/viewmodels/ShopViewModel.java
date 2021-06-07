@@ -23,4 +23,16 @@ public class ShopViewModel extends ViewModel {
     public void removeItemFromCart(CartItem cartItem) {
         cartRepo.removeItemFromCart(cartItem);
     }
+
+    public void changeQuantity(CartItem cartItem,int quantity) {
+        cartRepo.changeQuantity(cartItem,quantity);
+    }
+
+    public LiveData<Integer> getTotalPrice() {
+        return cartRepo.getTotalPrice();
+    }
+
+    public void resetCart() {
+        cartRepo.initCart();
+    }
 }

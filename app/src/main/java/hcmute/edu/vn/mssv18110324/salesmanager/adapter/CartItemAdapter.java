@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -26,6 +27,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
     public interface DeleteItem {
         void deleteItem(CartItem cartItem);
+        void changeQuantity(CartItem cartItem, int quantity);
     }
 
     public CartItemAdapter(Context activity, ArrayList<CartItem> lstCartItem) {
@@ -56,6 +58,21 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     IdeleteItem.deleteItem((CartItem)itemView.getTag());
+                }
+            });
+            quantitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    int quantity = position + 1;
+                    if (quantity == ((CartItem)itemView.getTag()).get_quantity()) {
+                        return;
+                    }
+                    IdeleteItem.changeQuantity(((CartItem)itemView.getTag()),quantity);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
                 }
             });
         }

@@ -22,6 +22,7 @@ public class NavController extends AppCompatActivity  {
                 .hide(manager.findFragmentById(R.id.fragListProduct))
                 .hide(manager.findFragmentById(R.id.fragDetailProduct))
                 .hide(manager.findFragmentById(R.id.fragCart))
+                .hide(manager.findFragmentById(R.id.fragOrder))
                 .show(manager.findFragmentById(R.id.fragHome))
                 .addToBackStack(null)
                 .commit();
@@ -32,6 +33,7 @@ public class NavController extends AppCompatActivity  {
                 .hide(manager.findFragmentById(R.id.fragListProduct))
                 .hide(manager.findFragmentById(R.id.fragDetailProduct))
                 .hide(manager.findFragmentById(R.id.fragCart))
+                .hide(manager.findFragmentById(R.id.fragOrder))
                 .show(manager.findFragmentById(R.id.fragListCategory))
                 .addToBackStack(null)
                 .commit();
@@ -43,6 +45,7 @@ public class NavController extends AppCompatActivity  {
                 .hide(manager.findFragmentById(R.id.fragHome))
                 .hide(manager.findFragmentById(R.id.fragDetailProduct))
                 .hide(manager.findFragmentById(R.id.fragCart))
+                .hide(manager.findFragmentById(R.id.fragOrder))
                 .show(manager.findFragmentById(R.id.fragListProduct))
                 .addToBackStack(null)
                 .commit();
@@ -53,6 +56,7 @@ public class NavController extends AppCompatActivity  {
                 .hide(manager.findFragmentById(R.id.fragHome))
                 .hide(manager.findFragmentById(R.id.fragListProduct))
                 .hide(manager.findFragmentById(R.id.fragCart))
+                .hide(manager.findFragmentById(R.id.fragOrder))
                 .show(manager.findFragmentById(R.id.fragDetailProduct))
                 .addToBackStack(null)
                 .commit();
@@ -63,7 +67,19 @@ public class NavController extends AppCompatActivity  {
                 .hide(manager.findFragmentById(R.id.fragHome))
                 .hide(manager.findFragmentById(R.id.fragListProduct))
                 .hide(manager.findFragmentById(R.id.fragDetailProduct))
+                .hide(manager.findFragmentById(R.id.fragOrder))
                 .show(manager.findFragmentById(R.id.fragCart))
+                .addToBackStack(null)
+                .commit();
+    }
+    public void showFragmentOrder() {
+        manager.beginTransaction()
+                .hide(manager.findFragmentById(R.id.fragListCategory))
+                .hide(manager.findFragmentById(R.id.fragHome))
+                .hide(manager.findFragmentById(R.id.fragListProduct))
+                .hide(manager.findFragmentById(R.id.fragDetailProduct))
+                .hide(manager.findFragmentById(R.id.fragCart))
+                .show(manager.findFragmentById(R.id.fragOrder))
                 .addToBackStack(null)
                 .commit();
     }

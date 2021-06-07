@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,10 @@ import hcmute.edu.vn.mssv18110324.salesmanager.viewmodels.ShopViewModel;
 
 public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
 
+
+    TextView orderTotalTextView;
+    Button placeOrderButton;
+
     RecyclerView recyclerView;
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager manager;
@@ -37,6 +44,15 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
 
     ShopViewModel shopViewModel = new ShopViewModel();
 
+    FragmentActivity fragmentActivity;
+
+    NavController navController;
+
+    private void addControl(View view) {
+        orderTotalTextView = view.findViewById(R.id.orderTotalTextView);
+        placeOrderButton = view.findViewById(R.id.placeOrderButton);
+    }
+
     public CartFrag() {
         // Required empty public constructor
     }
@@ -45,7 +61,10 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         activity = context;
-        deleteItem=this::deleteItem;
+        deleteItem = (CartItemAdapter.DeleteItem) this;
+        fragmentActivity = (FragmentActivity)context;
+        navController = new NavController(fragmentActivity.getSupportFragmentManager());
+//        deleteItem=this::deleteItem;
     }
 
     @Override
@@ -58,7 +77,7 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        addControl(view);
         recyclerView =  view.findViewById(R.id.cartRecyclerView);
         recyclerView.setHasFixedSize(true);
 
@@ -83,11 +102,24 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
                 myAdapter = new CartItemAdapter(deleteItem,lstCartItem);
 
                 recyclerView.setAdapter(myAdapter);
-                Log.d("onChanged",cartItems.size()+"");
+
+                placeOrderButton.setEnabled(lstCartItem.size() > 0);
             }
         });
 
+        shopViewModel.getTotalPrice().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                orderTotalTextView.setText("Total $:"+integer.toString());
+            }
+        });
 
+        placeOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.showFragmentOrder();
+            }
+        });
 
         Log.d("onViewCreated: ","List Cart Item");
     }
@@ -109,4 +141,10 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
         Log.d("Deleted",cartItem.get_product().get_name());
         shopViewModel.removeItemFromCart(cartItem);
     }
+
+    @Override
+    public void changeQuantity(CartItem cartItem, int quantity) {
+        shopViewModel.changeQuantity(cartItem,quantity);
+    }
+
 }

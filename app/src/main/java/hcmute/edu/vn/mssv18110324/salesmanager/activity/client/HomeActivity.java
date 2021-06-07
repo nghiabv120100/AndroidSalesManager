@@ -56,6 +56,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
     ProductDatabaseHandler dbProduct  = new ProductDatabaseHandler(this);
     NavController navController = new NavController(getSupportFragmentManager());
 
+    private int cartQuantity = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,12 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         shopViewModel.getCart().observe(this, new Observer<List<CartItem>>() {
             @Override
             public void onChanged(List<CartItem> cartItems) {
-
-                Log.d("onChanged",cartItems.size()+"");
+                int quantity=0;
+                for (CartItem cartItem:cartItems) {
+                    quantity+=cartItem.get_quantity();
+                }
+                cartQuantity = quantity;
+                invalidateOptionsMenu();
             }
         });
 
@@ -80,18 +86,30 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu,menu);
+
+        final MenuItem menuItem = menu.findItem(R.id.cart);
+        View actionView = menuItem.getActionView();
+        TextView cartBadgeTextView = actionView.findViewById(R.id.cart_badge_text_view);
+        cartBadgeTextView.setText(String.valueOf(cartQuantity));
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        navController.showFragmentCart();
+/*        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                navController.showFragmentCart();
                 return false;
             }
-        });
+        });*/
         return true;
 //        return super.onOptionsItemSelected(item);
     }

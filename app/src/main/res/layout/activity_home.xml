@@ -44,12 +44,20 @@
         android:layout_weight="1"
         android:layout_height="1dp"/>
     <fragment
+        android:id="@+id/fragOrder"
+        tools:layout="@layout/fragment_order"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.OrderFrag"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="1dp"/>
+    <fragment
         android:id="@+id/fragNavbar"
         tools:layout="@layout/fragment_navbar"
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.NavbarFlag"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         />
+
 
 
 </LinearLayout>
