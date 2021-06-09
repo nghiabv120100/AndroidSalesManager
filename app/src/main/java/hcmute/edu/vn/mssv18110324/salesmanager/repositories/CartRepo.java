@@ -13,6 +13,11 @@ public class CartRepo {
     private MutableLiveData<List<CartItem>> mutableCart = new MutableLiveData<>();
     private MutableLiveData<Integer> mutableTotalPrice = new MutableLiveData<>();
 
+    public MutableLiveData<Integer> getMutableTotalPrice() {
+        return mutableTotalPrice;
+    }
+
+
     public LiveData<List<CartItem>> getCart() {
         if (mutableCart.getValue() == null) {
             initCart();

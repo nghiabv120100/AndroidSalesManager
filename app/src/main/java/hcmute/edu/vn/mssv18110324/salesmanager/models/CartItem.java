@@ -2,10 +2,10 @@ package hcmute.edu.vn.mssv18110324.salesmanager.models;
 
 
 public class CartItem {
-     private Integer _id;
-     private Product _product;
-     private Integer _quantity;
-     private Integer _unit_price;
+    private Product _product;
+    private Integer _cart_id;
+    private Integer _quantity;
+    private Integer _unit_price;
 
 
 
@@ -22,20 +22,12 @@ public class CartItem {
         this._status = 1;
     }
 
-    public CartItem(Integer _id, Product _product, Integer _quantity, Integer _unit_price, Integer _status) {
-        this._id = _id;
-        this._product = _product;
-        this._quantity = _quantity;
-        this._unit_price = _unit_price;
-        this._status = _status;
+    public Integer get_cart_id() {
+        return _cart_id;
     }
 
-    public Integer get_id() {
-        return _id;
-    }
-
-    public void set_id(Integer _id) {
-        this._id = _id;
+    public void set_cart_id(Integer _cart_id) {
+        this._cart_id = _cart_id;
     }
 
     public Product get_product() {

@@ -1,6 +1,7 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.utils;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.CartItem;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 

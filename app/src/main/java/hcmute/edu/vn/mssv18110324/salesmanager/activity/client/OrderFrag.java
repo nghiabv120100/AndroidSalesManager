@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.utils.CartDatabaseHandler;
 import hcmute.edu.vn.mssv18110324.salesmanager.viewmodels.ShopViewModel;
 
 
@@ -26,6 +27,8 @@ public class OrderFrag extends Fragment {
 
     NavController navController;
 
+    Context context;
+
     public OrderFrag() {
         // Required empty public constructor
     }
@@ -34,6 +37,7 @@ public class OrderFrag extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         fragmentActivity = (FragmentActivity)context;
+        this.context = context;
         navController = new NavController(fragmentActivity.getSupportFragmentManager());
     }
 
@@ -48,11 +52,12 @@ public class OrderFrag extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
-
+        shopViewModel.cartDatabaseHandler = new CartDatabaseHandler(context);
         btnContinueShopping= view.findViewById(R.id.btnContinueShopping);
         btnContinueShopping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                shopViewModel.insertCart();
                 shopViewModel.resetCart();
                 navController.showFragmentHome();
             }
