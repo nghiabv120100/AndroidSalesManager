@@ -53,6 +53,7 @@ public class OrderFrag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
         shopViewModel.cartDatabaseHandler = new CartDatabaseHandler(context);
+        shopViewModel.context =context;
         btnContinueShopping= view.findViewById(R.id.btnContinueShopping);
         btnContinueShopping.setOnClickListener(new View.OnClickListener() {
             @Override

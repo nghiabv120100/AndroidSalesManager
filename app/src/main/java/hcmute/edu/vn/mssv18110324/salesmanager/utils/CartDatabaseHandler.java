@@ -51,7 +51,7 @@ public class CartDatabaseHandler extends SQLiteOpenHelper {
         CartItemDatabaseHandler cartItemDatabaseHandler = new CartItemDatabaseHandler(context);
         try {
             ContentValues cv = new ContentValues();
-            cv.put(KEY_ID,cart.get_id());
+//            cv.put(KEY_ID,cart.get_id());
             cv.put(KEY_TOTAL_PRICE,cart.get_total_price());
             cv.put(KEY_CUSTOMER_ID,cart.get_customer_id());
             cv.put(KEY_STATUS,cart.get_status());

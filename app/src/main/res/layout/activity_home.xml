@@ -51,11 +51,19 @@
         android:layout_weight="1"
         android:layout_height="1dp"/>
     <fragment
+        android:id="@+id/fragPersonalInfo"
+        tools:layout="@layout/fragment_personal_info"
+        android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.PersonalInfoFrag"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="1dp"
+        />
+    <fragment
         android:id="@+id/fragNavbar"
         tools:layout="@layout/fragment_navbar"
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.NavbarFlag"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         />
 
 

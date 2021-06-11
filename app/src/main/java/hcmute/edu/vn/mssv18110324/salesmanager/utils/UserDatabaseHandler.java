@@ -2,6 +2,7 @@ package hcmute.edu.vn.mssv18110324.salesmanager.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -75,6 +76,29 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    public int update(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            ContentValues cv = new ContentValues();
+            // Put data
+            cv.put(KEY_ID,user.get_id());
+            cv.put(KEY_FULL_NAME,user.get_full_name());
+            cv.put(KEY_EMAIL,user.get_email());
+            cv.put(KEY_PHONE_NUMBER,user.get_phone_number());
+            cv.put(KEY_PASSWORD,user.get_password());
+            cv.put(KEY_ROLE,user.get_role());
+            cv.put(KEY_STATUS,user.get_status());
+
+            //insert data into sqlite
+            db.update(TABLE_USER, cv, "_id = ?", new String[]{user.get_id().toString()});
+            db.close();
+            return 1;
+        } catch (Exception e) {
+            db.close();
+            return -1;
+        }
+    }
+
     public List<User> getAllUser() {
         List<User> lstUser = new ArrayList<User>();
         // Select All Query
@@ -95,6 +119,36 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         String query ="Select * From "+ TABLE_USER+ " Where _email = '"+email+ "'";
+
+        Cursor cursor= db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        int iID = cursor.getColumnIndex(KEY_ID);
+        int iFullName = cursor.getColumnIndex(KEY_FULL_NAME);
+        int iEmail = cursor.getColumnIndex(KEY_EMAIL);
+        int iPhoneNumber = cursor.getColumnIndex(KEY_PHONE_NUMBER);
+        int iPassword = cursor.getColumnIndex(KEY_PASSWORD);
+        int iRole = cursor.getColumnIndex(KEY_ROLE);
+        int iStatus = cursor.getColumnIndex(KEY_STATUS);
+        User user = new User();
+        if (cursor.getCount() > 0) {
+            user.set_id(cursor.getInt(iID));
+            user.set_full_name(cursor.getString(iFullName));
+            user.set_email(cursor.getString(iEmail));
+            user.set_phone_number(cursor.getString(iPhoneNumber));
+            user.set_password(cursor.getString(iPassword));
+            user.set_role(cursor.getInt(iRole));
+            user.set_status(cursor.getInt(iStatus));
+        }
+        return user;
+    }
+
+    public User getUserByID(Integer id) {
+        String[] columns = new String[] {KEY_ID,KEY_FULL_NAME,KEY_EMAIL,KEY_PHONE_NUMBER,KEY_PASSWORD,KEY_ROLE,KEY_STATUS};
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query ="Select * From "+ TABLE_USER+ " Where _id = '"+id+ "'";
 
         Cursor cursor= db.rawQuery(query,null);
 

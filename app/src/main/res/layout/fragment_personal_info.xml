@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.client.PersonalInfoFrag">
+
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:src="@drawable/person"
+        android:layout_gravity="center"
+        android:layout_marginTop="45sp"
+        />
+    <TextView
+        android:id="@+id/txtFullName"
+        android:textStyle="bold"
+        android:textSize="23dp"
+        android:text="Bùi Văn Nghĩa"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/txtChangePersonalInformation"
+        android:textSize="23dp"
+        android:textColor="@color/black"
+        android:text="Thay đổi thông tin cá nhân."
+        android:layout_marginTop="25sp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/txtPurchaseHistory"
+        android:textSize="23dp"
+        android:textColor="@color/black"
+        android:text="Lịch sử mua hàng."
+        android:layout_marginTop="25sp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnLogout"
+        android:text="Đăng xuất"
+        android:layout_marginTop="25sp"
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

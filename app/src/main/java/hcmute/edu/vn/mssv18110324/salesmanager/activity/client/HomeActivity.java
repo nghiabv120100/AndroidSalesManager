@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,7 +40,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.utils.ProductDatabaseHandler;
 import hcmute.edu.vn.mssv18110324.salesmanager.viewmodels.ShopViewModel;
 
 public class HomeActivity extends AppCompatActivity implements CategoryAdapter.ItemClicked, ProductAdapter.ProductClicked {
-    ImageButton btnToggle,btnHome;
+    ImageButton btnToggle,btnHome,btnPersonalInfo;
 
     //Widgets of Product Detail Fragment
     ImageView imgProductDetail;
@@ -57,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
     NavController navController = new NavController(getSupportFragmentManager());
 
     private int cartQuantity = 0;
+
 
 
     @Override
@@ -80,7 +82,18 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         });
 
         navController.showFragmentProduct();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("onResume","Back Click");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("onPause","Back Click");
     }
 
     @Override
@@ -104,20 +117,14 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         navController.showFragmentCart();
-/*        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        });*/
         return true;
-//        return super.onOptionsItemSelected(item);
     }
 
     private void addControl() {
         //Widget of Navbar
         btnToggle = findViewById(R.id.btnToggle);
         btnHome = findViewById(R.id.btnHome);
+        btnPersonalInfo = findViewById(R.id.btnPersonalInfo);
         //
         //Widgets of Fragment Product Detail
         imgProductDetail = findViewById(R.id.imgProductDetail);
@@ -143,6 +150,13 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             @Override
             public void onClick(View v) {
                 navController.showFragmentListCategory();
+            }
+        });
+
+        btnPersonalInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.showFragmentPersonalInfo();
             }
         });
 

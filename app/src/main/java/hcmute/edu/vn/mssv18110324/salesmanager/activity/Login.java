@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.UserDatabaseHandler;
 
 public class Login extends AppCompatActivity {
+    public static final String MY_PREFS_FILENAME="hcmute.edu.vn.mssv18110324.salesmanager.UserId";
 
     private View mProgressView;
     private View mLoginFormView;
@@ -43,17 +45,6 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         addControls();
         addEvents();
-
-       /* User user = new User();
-        user.set_id(1);
-        user.set_email("nghiaclient@gmail.com");
-        user.set_role(0);
-        user.set_password("nghia123");
-        user.set_full_name("Bui Van Nghia");
-
-        db.addUser(user);*/
-
-
     }
     private void addControls() {
         mLoginFormView = findViewById(R.id.login_form);
@@ -84,7 +75,14 @@ public class Login extends AppCompatActivity {
                         showProgress(false);
                     } else if (user.get_email().equals(email) && user.get_password().equals(password) && user.get_role()==0) {
                         Toast.makeText(Login.this,"Logged successfully",Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(Login.this, HomeActivity.class));
+                        Intent intent = new Intent(Login.this, HomeActivity.class);
+                        // add session
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_FILENAME,MODE_PRIVATE).edit();
+                        editor.putInt("userId",user.get_id());
+                        editor.commit();
+                        //
+
+                        startActivity(intent);
                         showProgress(false);
                     } else {
                         Toast.makeText(Login.this,"Error: Logged fail",Toast.LENGTH_LONG).show();
