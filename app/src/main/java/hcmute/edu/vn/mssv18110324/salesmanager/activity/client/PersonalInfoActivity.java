@@ -31,8 +31,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     private static final int PERMISSION_CODE_2 = 1001;
     private int isChangeAvatar = 0;
 
-    EditText txtName,txtPhoneNumber,txtEmail;
-    TextView txtChangePassword;
+    EditText txtName,txtPhoneNumber;
+    TextView txtChangePassword,txtEmail;
     Button btnChangeInfo;
     User user;
     ImageView imgAvatar;
@@ -135,7 +135,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         txtChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getApplicationContext(),ChangePasswordActivity.class);
+                startActivity(intent);
             }
         });
     }

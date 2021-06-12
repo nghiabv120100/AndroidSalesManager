@@ -52,6 +52,7 @@ public class PersonalInfoFrag extends Fragment {
         if (id != -1) {
             User user =  userDatabaseHandler.getUserByID(id);
             txtFullName.setText(user.get_full_name());
+            imgAvatar.setImageBitmap(user.get_avatar());
         } else {
             // toward login
         }

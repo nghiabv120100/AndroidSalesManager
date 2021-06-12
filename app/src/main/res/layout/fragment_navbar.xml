@@ -7,37 +7,87 @@
     tools:context=".activity.client.NavbarFlag">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageButton
-        android:id="@+id/btnToggle"
+    <LinearLayout
+        android:id="@+id/linearToggle"
         android:layout_width="120sp"
-        android:layout_height="50sp"
-        android:padding="20dp"
-        android:background="@drawable/category_icon"
-        android:scaleType="center"
-        android:text="Sản phẩm"
-        android:textSize="10dp"
+        android:layout_height="70sp"
+        android:orientation="vertical"
         android:layout_marginLeft="10dp"
-        />
-    <ImageButton
-        android:id="@+id/btnHome"
+        >
+        <ImageButton
+            android:id="@+id/btnToggle"
+            android:layout_width="50sp"
+            android:layout_height="40sp"
+            android:layout_gravity="center"
+            android:background="@drawable/category_icon"
+            android:scaleType="fitXY"
+            android:text="Sản phẩm"
+            android:textSize="10dp"
+            />
+        <TextView
+            android:text="Danh mục"
+            android:textSize="10sp"
+            android:textColor="@color/black"
+            android:padding="0dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearHome"
         android:layout_width="120sp"
-        android:layout_height="50sp"
-        android:padding="20dp"
-        android:background="@drawable/home_icon"
-        android:scaleType="center"
-        android:text="Home"
-        android:textSize="10dp"
+        android:layout_height="70sp"
+        android:orientation="vertical"
         android:layout_marginLeft="10dp"
-        />
-    <ImageButton
-        android:id="@+id/btnPersonalInfo"
+        >
+        <ImageButton
+            android:id="@+id/btnHome"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/home"
+            android:scaleType="fitXY"
+            android:text="Home"
+            android:textSize="10dp"
+
+            />
+        <TextView
+            android:text="Trang chủ"
+            android:textSize="10sp"
+            android:padding="0dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearPersonal"
         android:layout_width="120sp"
-        android:layout_height="50sp"
-        android:padding="20dp"
-        android:background="@drawable/person"
-        android:scaleType="fitCenter"
-        android:text="Cá nhân"
-        android:textSize="10dp"
+        android:layout_height="70sp"
+        android:orientation="vertical"
         android:layout_marginLeft="10dp"
-        />
+        >
+        <ImageButton
+            android:id="@+id/btnPersonalInfo"
+            android:layout_width="50sp"
+            android:layout_height="40sp"
+            android:layout_gravity="center"
+            android:background="@drawable/person"
+            android:scaleType="fitXY"
+            android:text="Cá nhân"
+            android:textSize="10dp"
+            />
+        <TextView
+            android:text="Cá nhân"
+            android:textSize="10sp"
+            android:padding="0dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
 </LinearLayout>

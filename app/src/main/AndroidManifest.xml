@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SalesManager">
-        <activity android:name=".activity.client.PersonalInfoActivity"></activity>
+        <activity android:name=".activity.client.ChangePasswordActivity"></activity>
+        <activity android:name=".activity.client.PersonalInfoActivity" />
         <activity android:name=".activity.client.HomeActivity" />
         <activity android:name=".activity.ResetPassword" />
         <activity android:name=".activity.MainActivity" />

@@ -11,6 +11,7 @@ import android.app.Fragment;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.viewmodels.ShopViewModel;
 
 public class HomeActivity extends AppCompatActivity implements CategoryAdapter.ItemClicked, ProductAdapter.ProductClicked {
     ImageButton btnToggle,btnHome,btnPersonalInfo;
+    LinearLayout linearToggle,linearHome,linearPersonal;
 
     //Widgets of Product Detail Fragment
     ImageView imgProductDetail;
@@ -130,6 +133,9 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         btnToggle = findViewById(R.id.btnToggle);
         btnHome = findViewById(R.id.btnHome);
         btnPersonalInfo = findViewById(R.id.btnPersonalInfo);
+        linearToggle = findViewById(R.id.linearToggle);
+        linearHome = findViewById(R.id.linearHome);
+        linearPersonal = findViewById(R.id.linearPersonal);
         //
         //Widgets of Fragment Product Detail
         imgProductDetail = findViewById(R.id.imgProductDetail);
@@ -148,6 +154,9 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             @Override
             public void onClick(View v) {
                 navController.showFragmentHome();
+                linearHome.setBackgroundColor(Color.rgb(255,224,178));
+                linearPersonal.setBackgroundColor(Color.WHITE);
+                linearToggle.setBackgroundColor(Color.WHITE);
             }
         });
 
@@ -155,6 +164,9 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             @Override
             public void onClick(View v) {
                 navController.showFragmentListCategory();
+                linearHome.setBackgroundColor(Color.WHITE);
+                linearPersonal.setBackgroundColor(Color.WHITE);
+                linearToggle.setBackgroundColor(Color.rgb(255,224,178));
             }
         });
 
@@ -162,9 +174,39 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             @Override
             public void onClick(View v) {
                 navController.showFragmentPersonalInfo();
+                linearHome.setBackgroundColor(Color.WHITE);
+                linearPersonal.setBackgroundColor(Color.rgb(255,224,178));
+                linearToggle.setBackgroundColor(Color.WHITE);
             }
         });
 
+        linearToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.showFragmentListCategory();
+                linearHome.setBackgroundColor(Color.WHITE);
+                linearPersonal.setBackgroundColor(Color.WHITE);
+                linearToggle.setBackgroundColor(Color.rgb(255,224,178));
+            }
+        });
+        linearHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.showFragmentHome();
+                linearHome.setBackgroundColor(Color.rgb(255,224,178));
+                linearPersonal.setBackgroundColor(Color.WHITE);
+                linearToggle.setBackgroundColor(Color.WHITE);
+            }
+        });
+        linearPersonal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.showFragmentPersonalInfo();
+                linearHome.setBackgroundColor(Color.WHITE);
+                linearPersonal.setBackgroundColor(Color.rgb(255,224,178));
+                linearToggle.setBackgroundColor(Color.WHITE);
+            }
+        });
 
     }
 
@@ -237,8 +279,6 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         product.set_price(20000);
         product.set_quantity(22);
         dbProduct.addProduct(product);
-
-
     }
 
 

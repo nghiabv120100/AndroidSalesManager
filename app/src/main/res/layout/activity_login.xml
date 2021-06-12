@@ -50,7 +50,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="nghia@gmail.com"
+            android:text="nghia2@gmail.com"
             android:textSize="22dp"
             android:hint="Please enter your email address"
             android:ems="10"
