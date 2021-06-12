@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
@@ -57,14 +58,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        String sPrice = formatter.format(lstProduct.get(position).get_price());
+
         holder.itemView.setTag(lstProduct.get(position));
-        holder.txtPriceProduct.setText(lstProduct.get(position).get_price().toString());
+        holder.txtPriceProduct.setText(sPrice+" đ");
         holder.imgImageProduct.setImageBitmap(lstProduct.get(position).get_image());
         holder.txtNameProduct.setText(lstProduct.get(position).get_name());
     }
 
     @Override
     public int getItemCount() {
-        return lstProduct.size();
+        if (lstProduct ==null)
+            return 0;
+        else
+            return lstProduct.size();
     }
 }

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
@@ -88,12 +89,15 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        String sPrice = formatter.format(lstCartItem.get(position).get_quantity()*lstCartItem.get(position).get_unit_price());
+
         holder.itemView.setTag(lstCartItem.get(position));
         holder.productImageView.setImageBitmap(lstCartItem.get(position).get_product().get_image());
         holder.quantitySpinner.setSelection(lstCartItem.get(position).get_quantity()-1);
         holder.deleteProductButton.setImageResource(R.drawable.ic_baseline_delete_24);
         holder.productNameTextView.setText(lstCartItem.get(position).get_product().get_name());
-        holder.productTotalPriceTextView.setText(lstCartItem.get(position).get_quantity()*lstCartItem.get(position).get_unit_price()+"");
+        holder.productTotalPriceTextView.setText(sPrice+" đ");
     }
 
     @Override

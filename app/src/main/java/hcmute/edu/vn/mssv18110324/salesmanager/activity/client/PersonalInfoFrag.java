@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
@@ -23,6 +24,7 @@ public class PersonalInfoFrag extends Fragment {
 
     TextView txtChangePersonalInformation,txtPurchaseHistory,txtFullName;
     Button btnLogout;
+    ImageView imgAvatar;
     View view;
     UserDatabaseHandler userDatabaseHandler;
     public PersonalInfoFrag() {
@@ -60,11 +62,13 @@ public class PersonalInfoFrag extends Fragment {
         txtPurchaseHistory = view.findViewById(R.id.txtPurchaseHistory);
         btnLogout = view.findViewById(R.id.btnLogout);
         txtFullName = view.findViewById(R.id.txtFullName);
+        imgAvatar = view.findViewById(R.id.imgAvatar);
 
         SharedPreferences pref = getActivity().getSharedPreferences(Login.MY_PREFS_FILENAME, Context.MODE_PRIVATE);
         Integer id = pref.getInt("userId",-1);  // Second argument is default value
         if (id != -1) {
             User user =  userDatabaseHandler.getUserByID(id);
+            imgAvatar.setImageBitmap(user.get_avatar());
             txtFullName.setText(user.get_full_name());
         } else {
             // toward login

@@ -81,6 +81,11 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             }
         });
 
+      /*  Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.cafe_milk);
+        addCategory(icon);
+        addProduct(icon);
+        */
         navController.showFragmentProduct();
     }
 
@@ -225,7 +230,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         Product product = new Product();
         product.set_id(3);
         product.set_status(1);
-        product.set_category_id(4);
+        product.set_category_id(5);
         product.set_image(bitmap);
         product.set_describe("Nothing");
         product.set_name("ABCCC");

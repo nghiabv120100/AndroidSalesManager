@@ -8,6 +8,7 @@
     tools:context=".activity.client.PersonalInfoActivity">
 
     <ImageView
+        android:id="@+id/imgAvatar"
         android:layout_marginTop="30dp"
         android:src="@drawable/user4"
         android:backgroundTint="@color/colorPrimaryLight"

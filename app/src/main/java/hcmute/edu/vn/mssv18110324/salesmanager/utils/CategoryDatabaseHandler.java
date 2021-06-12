@@ -18,7 +18,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 
 public class CategoryDatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "salesManager";
     private static final String TABLE_CATEGORY = "category";
     private static final String KEY_ID ="_id";
@@ -28,6 +28,19 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
 
     public CategoryDatabaseHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    private byte[] imagemTratada(byte[] imagem_img){
+
+        while (imagem_img.length > 500000){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imagem_img, 0, imagem_img.length);
+            Bitmap resized = Bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.8), (int)(bitmap.getHeight()*0.8), true);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            resized.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            imagem_img = stream.toByteArray();
+        }
+        return imagem_img;
+
     }
 
     @Override
@@ -46,6 +59,17 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
         //Create new table
         onCreate(db);
     }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //Delete table
+        db.execSQL("Drop Table If Exists "+TABLE_CATEGORY);
+
+        //Create new table
+        onCreate(db);
+
+    }
+
     public int addCategory(Category category) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -53,6 +77,7 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             category.get_image().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
             byte[] bytesImage = byteArrayOutputStream.toByteArray();
+            bytesImage = imagemTratada(bytesImage);
 
             ContentValues cv = new ContentValues();
             cv.put(KEY_ID,category.get_id());

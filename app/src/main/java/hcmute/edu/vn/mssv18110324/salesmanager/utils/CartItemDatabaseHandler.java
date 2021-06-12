@@ -11,7 +11,7 @@ import hcmute.edu.vn.mssv18110324.salesmanager.models.CartItem;
 
 public class CartItemDatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 11;
+    private static final int DATABASE_VERSION = 10;
     private static final String DATABASE_NAME = "salesManager";
     private static final String TABLE_CART_ITEM = "cart_item";
     private static final String KEY_PRODUCT_ID ="_product_id";
@@ -35,6 +35,12 @@ public class CartItemDatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("Drop Table If Exists "+TABLE_CART_ITEM);
+        onCreate(db);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("Drop Table If Exists "+TABLE_CART_ITEM);
         onCreate(db);
     }

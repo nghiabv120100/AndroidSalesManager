@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,7 +111,10 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
         shopViewModel.getTotalPrice().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                orderTotalTextView.setText("Total $:"+integer.toString());
+                DecimalFormat formatter = new DecimalFormat("#,###,###");
+                String sTotalPrice = formatter.format(integer);
+
+                orderTotalTextView.setText("Total: "+sTotalPrice+" đ");
             }
         });
 

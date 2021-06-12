@@ -45,6 +45,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         addControls();
         addEvents();
+
     }
     private void addControls() {
         mLoginFormView = findViewById(R.id.login_form);

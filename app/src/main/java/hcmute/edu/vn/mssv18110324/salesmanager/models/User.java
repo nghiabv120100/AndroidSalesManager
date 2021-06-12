@@ -1,6 +1,8 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.models;
 
 
+import android.graphics.Bitmap;
+
 public class User {
     private Integer _id;
     private String _full_name;
@@ -9,6 +11,9 @@ public class User {
     private String _password;
     private Integer _role;
     private Integer _status;
+    private Bitmap _avatar;
+
+
 
     public User() {
         this._role=0;
@@ -80,5 +85,13 @@ public class User {
 
     public void set_status(Integer _status) {
         this._status = _status;
+    }
+
+    public Bitmap get_avatar() {
+        return _avatar;
+    }
+
+    public void set_avatar(Bitmap _avatar) {
+        this._avatar = _avatar;
     }
 }
