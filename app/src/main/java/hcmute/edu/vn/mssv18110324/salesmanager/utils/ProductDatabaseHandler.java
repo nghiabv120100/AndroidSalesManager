@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
 
 public class ProductDatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 10;
@@ -161,5 +162,40 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             lstProduct.add(product);
         }
         return lstProduct.isEmpty()?null:lstProduct;
+    }
+
+
+    public Product getByProductID(Integer id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select * From " + TABLE_PRODUCT + " Where _id = '" + id + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
+        int iID = cursor.getColumnIndex(KEY_ID);
+        int iName = cursor.getColumnIndex(KEY_NAME);
+        int iPrice = cursor.getColumnIndex(KEY_PRICE);
+        int iDescribe = cursor.getColumnIndex(KEY_DESCRIBE);
+        int iImage = cursor.getColumnIndex(KEY_IMAGE);
+        int iCategoryID = cursor.getColumnIndex(KEY_CATEGORY_ID);
+        int iStatus = cursor.getColumnIndex(KEY_STATUS);
+
+        Product product = new Product();
+
+        if (cursor.getCount() > 0) {
+            product.set_id(cursor.getInt(iID));
+            product.set_name(cursor.getString(iName));
+            product.set_price(cursor.getInt(iPrice));
+            product.set_describe(cursor.getString(iDescribe));
+
+            // convert byte to bitmap
+            byte[] bytesImage = cursor.getBlob(iImage);
+            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+            product.set_image(bitmapImage);
+
+            product.set_category_id(cursor.getInt(iCategoryID));
+            product.set_status(cursor.getInt(iStatus));
+        }
+        return product;
     }
 }

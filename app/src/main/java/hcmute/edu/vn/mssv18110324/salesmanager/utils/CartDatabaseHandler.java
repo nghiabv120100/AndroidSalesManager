@@ -2,12 +2,15 @@ package hcmute.edu.vn.mssv18110324.salesmanager.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Cart;
@@ -75,5 +78,33 @@ public class CartDatabaseHandler extends SQLiteOpenHelper {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    public ArrayList<Cart> getCartByCustomerID(Integer id) {
+        ArrayList<Cart> lstCart = new ArrayList<Cart>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            String query = "Select * From "+TABLE_CART + " Where "+KEY_CUSTOMER_ID +" = "+id;
+            Cursor cursor = db.rawQuery(query,null);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            int iID = cursor.getColumnIndex(KEY_ID);
+            int iTotalPrice = cursor.getColumnIndex(KEY_TOTAL_PRICE);
+            int iCustomerID = cursor.getColumnIndex(KEY_CUSTOMER_ID);
+            int iStatus = cursor.getColumnIndex(KEY_STATUS);
+            int iBuyDate = cursor.getColumnIndex(KEY_BUY_DATE);
+
+            for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
+                Cart cart = new Cart();
+                cart.set_id(cursor.getInt(iID));
+                cart.set_buy_date(dateFormat.parse(cursor.getString(iBuyDate)));
+                cart.set_total_price(cursor.getInt(iTotalPrice));
+                cart.set_customer_id(cursor.getInt(iCustomerID));
+                cart.set_status(cursor.getInt(iStatus));
+                lstCart.add(cart);
+            }
+        } catch (Exception e) {
+
+        }
+        return lstCart;
     }
 }

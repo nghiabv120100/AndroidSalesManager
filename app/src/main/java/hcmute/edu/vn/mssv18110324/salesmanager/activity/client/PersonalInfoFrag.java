@@ -94,6 +94,13 @@ public class PersonalInfoFrag extends Fragment {
                 startActivity(i);
             }
         });
+        txtPurchaseHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), HistoryPurchase.class);
+                startActivity(i);
+            }
+        });
     }
 
 

@@ -2,11 +2,16 @@ package hcmute.edu.vn.mssv18110324.salesmanager.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import hcmute.edu.vn.mssv18110324.salesmanager.models.Cart;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.CartItem;
 
 public class CartItemDatabaseHandler extends SQLiteOpenHelper {
@@ -20,8 +25,11 @@ public class CartItemDatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_UNIT_PRICE ="_unit_price";
     private static final String KEY_STATUS = "_status";
 
+    ProductDatabaseHandler dbProduct;
+
     public CartItemDatabaseHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        dbProduct = new ProductDatabaseHandler(context);
 //        onCreate(this.getWritableDatabase());
     }
 
@@ -61,5 +69,34 @@ public class CartItemDatabaseHandler extends SQLiteOpenHelper {
         } catch (Exception ex){
             return -1;
         }
+    }
+    public ArrayList<CartItem> getByCartID(Integer id) {
+        ArrayList<CartItem> lstCartItem = new ArrayList<CartItem>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            String query = "Select * From "+TABLE_CART_ITEM + " Where "+KEY_CART_ID +" = "+id;
+            Cursor cursor = db.rawQuery(query,null);
+            int iProductID = cursor.getColumnIndex(KEY_PRODUCT_ID);
+            int iCartId = cursor.getColumnIndex(KEY_CART_ID);
+            int iQuantity = cursor.getColumnIndex(KEY_QUANTITY);
+            int iStatus = cursor.getColumnIndex(KEY_STATUS);
+            int iUnitPrice = cursor.getColumnIndex(KEY_UNIT_PRICE);
+
+            for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
+
+                Integer productId = cursor.getInt(cursor.getInt(iProductID));
+
+                CartItem cartItem = new CartItem();
+                cartItem.set_cart_id(cursor.getInt(iCartId));
+                cartItem.set_product(dbProduct.getByProductID(productId));
+                cartItem.set_unit_price(cursor.getInt(iUnitPrice));
+                cartItem.set_status(cursor.getInt(iStatus));
+                cartItem.set_quantity(cursor.getInt(iQuantity));
+                lstCartItem.add(cartItem);
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return lstCartItem;
     }
 }
