@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="1"
+        android:layout_margin="10dp"
         />
     <fragment
         android:id="@+id/fragCart"
@@ -20,7 +21,9 @@
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.CartFrag"
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        />
 
     <fragment
         android:id="@+id/fragHome"
@@ -28,28 +31,35 @@
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.HomeFrag"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        />
     <fragment
         android:id="@+id/fragListCategory"
         tools:layout="@layout/fragment_list_category"
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.ListCategoryFrag"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        />
     <fragment
         android:id="@+id/fragListProduct"
         android:layout_width="match_parent"
         tools:layout="@layout/fragment_list_product"
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.ListProductFrag"
         android:layout_weight="1"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_margin="10dp"
+        />
     <fragment
         android:id="@+id/fragOrder"
         tools:layout="@layout/fragment_order"
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.OrderFrag"
         android:layout_width="match_parent"
         android:layout_weight="1"
-        android:layout_height="1dp"/>
+        android:layout_height="1dp"
+        android:layout_margin="10dp"/>
     <fragment
         android:id="@+id/fragPersonalInfo"
         tools:layout="@layout/fragment_personal_info"
@@ -57,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="1dp"
+        android:layout_margin="10dp"
         />
     <fragment
         android:id="@+id/fragNavbar"
@@ -64,6 +75,7 @@
         android:name="hcmute.edu.vn.mssv18110324.salesmanager.activity.client.NavbarFlag"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_margin="10dp"
         />
 
 

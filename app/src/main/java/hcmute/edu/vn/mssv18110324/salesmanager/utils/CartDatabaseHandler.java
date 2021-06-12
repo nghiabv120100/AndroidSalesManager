@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Cart;
@@ -29,13 +30,12 @@ public class CartDatabaseHandler extends SQLiteOpenHelper {
     public CartDatabaseHandler(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
-//        onCreate(this.getWritableDatabase());
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE ="Create Table "+TABLE_CART+"("+KEY_ID+" Integer Primary Key,"
-                +KEY_TOTAL_PRICE+" Integer,"+KEY_CUSTOMER_ID+" Integer,"+KEY_STATUS+" Integer,"+KEY_BUY_DATE+" Date)";
+                +KEY_TOTAL_PRICE+" Integer,"+KEY_CUSTOMER_ID+" Integer,"+KEY_STATUS+" Integer,"+KEY_BUY_DATE+" Text)";
 
         db.execSQL(CREATE_TABLE);
     }
@@ -56,11 +56,14 @@ public class CartDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         CartItemDatabaseHandler cartItemDatabaseHandler = new CartItemDatabaseHandler(context);
         try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             ContentValues cv = new ContentValues();
 //            cv.put(KEY_ID,cart.get_id());
             cv.put(KEY_TOTAL_PRICE,cart.get_total_price());
             cv.put(KEY_CUSTOMER_ID,cart.get_customer_id());
             cv.put(KEY_STATUS,cart.get_status());
+            cv.put(KEY_BUY_DATE,dateFormat.format(cart.get_buy_date()));
             long id = db.insert(TABLE_CART,null,cv);
             //add Cart item
             List<CartItem> lstCartItem = cart.get_lst_cart_item();

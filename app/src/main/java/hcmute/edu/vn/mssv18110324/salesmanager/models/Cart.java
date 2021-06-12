@@ -1,5 +1,6 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.models;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,10 @@ public class Cart {
     public Cart() {
         this._status=1;
         //buydate
+        Calendar calendar = Calendar.getInstance();
+        java.util.Date currentDate = calendar.getTime();
+        java.sql.Date date = new java.sql.Date(currentDate.getTime());
+        this.set_buy_date(date);
     }
 
     public int get_id() {
