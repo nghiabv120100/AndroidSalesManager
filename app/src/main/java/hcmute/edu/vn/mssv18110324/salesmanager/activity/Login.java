@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
+import hcmute.edu.vn.mssv18110324.salesmanager.activity.admin.AdminHomeActivity;
 import hcmute.edu.vn.mssv18110324.salesmanager.activity.client.HomeActivity;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.UserDatabaseHandler;
@@ -45,6 +48,11 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         addControls();
         addEvents();
+        /*User admin = new User(null,"Bùi Văn Nghĩa","nghiaadmin2@gmail.com","01111","123456",1,1);
+        Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.ancol);
+        admin.set_avatar(icon);
+        db.addUser(admin);
+*/
 
     }
     private void addControls() {
@@ -74,9 +82,16 @@ public class Login extends AppCompatActivity {
                     if (user.get_email()==null) {
                         Toast.makeText(Login.this,"Email incorrect",Toast.LENGTH_LONG).show();
                         showProgress(false);
-                    } else if (user.get_email().equals(email) && user.get_password().equals(password) && user.get_role()==0) {
+                    } else if (user.get_email().equals(email) && user.get_password().equals(password)) {
                         Toast.makeText(Login.this,"Logged successfully",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Login.this, HomeActivity.class);
+
+                        Intent intent;
+                        if (user.get_role() == 1) {
+                            intent = new Intent(Login.this, AdminHomeActivity.class);
+                        } else {
+                            intent = new Intent(Login.this, HomeActivity.class);
+                        }
+
                         // add session
                         SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_FILENAME,MODE_PRIVATE).edit();
                         editor.putInt("userId",user.get_id());

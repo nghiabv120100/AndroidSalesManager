@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.admin.AdminProductActionActivity">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:text="Thêm sản phẩm"
+        android:textSize="32dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/imgImageProduct"
+        android:src="@drawable/coffee_milk"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"/>
+    <TextView
+        android:text="Nhấp để chọn ảnh"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/txtNameProduct"
+        android:layout_marginTop="10dp"
+        android:hint="Tên sản phẩm"
+        android:gravity="center"
+        android:layout_marginHorizontal="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/txtPriceProduct"
+            android:layout_marginTop="10dp"
+            android:hint="Giá sản phẩm"
+            android:inputType="number"
+            android:gravity="center"
+            android:layout_marginHorizontal="30dp"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/txtQuantity"
+            android:layout_marginTop="10dp"
+            android:hint="Số lượng"
+            android:inputType="number"
+            android:gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerCategory"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnActionProduct"
+        android:text="Thêm sản phẩm"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

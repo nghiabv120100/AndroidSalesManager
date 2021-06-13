@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
+import hcmute.edu.vn.mssv18110324.salesmanager.models.User;
 
 public class CategoryDatabaseHandler extends SQLiteOpenHelper {
 
@@ -80,11 +81,11 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
             bytesImage = imagemTratada(bytesImage);
 
             ContentValues cv = new ContentValues();
-            cv.put(KEY_ID,category.get_id());
-            cv.put(KEY_IMAGE,bytesImage);
-            cv.put(KEY_NAME,category.get_name());
-            cv.put(KEY_STATUS,category.get_status());
-            db.insert(TABLE_CATEGORY,null,cv);
+            cv.put(KEY_ID, category.get_id());
+            cv.put(KEY_IMAGE, bytesImage);
+            cv.put(KEY_NAME, category.get_name());
+            cv.put(KEY_STATUS, category.get_status());
+            db.insert(TABLE_CATEGORY, null, cv);
             db.close();
             return 1;
 
@@ -92,6 +93,57 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
             db.close();
             return -1;
         }
+    }
+    public int updateCategory(Category category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            // convert bitmap to byte
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            category.get_image().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+            byte[] bytesImage = byteArrayOutputStream.toByteArray();
+            bytesImage = imagemTratada(bytesImage);
+
+            ContentValues cv = new ContentValues();
+            cv.put(KEY_ID, category.get_id());
+            cv.put(KEY_IMAGE, bytesImage);
+            cv.put(KEY_NAME, category.get_name());
+            cv.put(KEY_STATUS, category.get_status());
+            db.update(TABLE_CATEGORY, cv, "_id = ?", new String[]{category.get_id().toString()});
+            db.close();
+            return 1;
+
+        } catch (Exception ex) {
+            db.close();
+            return -1;
+        }
+    }
+
+    public Category findByID(Integer id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query ="Select * From "+ TABLE_CATEGORY + " Where _id = '"+id+ "'";
+
+        Cursor cursor= db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        int iID = cursor.getColumnIndex(KEY_ID);
+        int iName = cursor.getColumnIndex(KEY_NAME);
+        int iImage = cursor.getColumnIndex(KEY_IMAGE);
+        int iStatus = cursor.getColumnIndex(KEY_STATUS);
+        Category category = new Category();
+        if (cursor.getCount() > 0) {
+            category.set_id(cursor.getInt(iID));
+            category.set_name(cursor.getString(iName));
+            category.set_status(cursor.getInt(iStatus));
+            // convert byte[] to bitmap
+            byte[] bytesImage =cursor.getBlob(iImage);
+            if (bytesImage != null) {
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+                category.set_image(bitmapImage);
+            }
+
+        }
+        return category;
     }
 
     public ArrayList<Category> findAllCategory() {

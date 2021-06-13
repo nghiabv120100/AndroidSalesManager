@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.admin.AdminHomeActivity">
+    <ImageView
+        android:src="@drawable/home_picture"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="200dp"/>
+    <Button
+        android:id="@+id/btnManagerProduct"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Quản lý sản phẩm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnManagerCategory"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Quản lý danh mục"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnManagerOrders"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Quản lý đơn hàng"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnManagerUsers"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Quản lý người dùng"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="25dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="22dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Đăng xuất"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -79,13 +79,15 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
             // convert bitmap to byte
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            user.get_avatar().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-            byte[] bytesImage = byteArrayOutputStream.toByteArray();
-
-            bytesImage = imagemTratada(bytesImage);
-
             ContentValues cv = new ContentValues();
+
+            if (user.get_avatar() != null) {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                user.get_avatar().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+                byte[] bytesImage = byteArrayOutputStream.toByteArray();
+                bytesImage = imagemTratada(bytesImage);
+                cv.put(KEY_AVATAR,bytesImage);
+            }
             // Put data
             cv.put(KEY_ID,user.get_id());
             cv.put(KEY_FULL_NAME,user.get_full_name());
@@ -93,7 +95,6 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
             cv.put(KEY_PHONE_NUMBER,user.get_phone_number());
             cv.put(KEY_PASSWORD,user.get_password());
             cv.put(KEY_ROLE,user.get_role());
-            cv.put(KEY_AVATAR,bytesImage);
             cv.put(KEY_STATUS,user.get_status());
 
             //insert data into sqlite
@@ -111,10 +112,15 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         try {
             // convert bitmap to byte
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            user.get_avatar().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-            byte[] bytesImage = byteArrayOutputStream.toByteArray();
-            bytesImage = imagemTratada(bytesImage);
+
             ContentValues cv = new ContentValues();
+
+            if (user.get_avatar() != null) {
+                user.get_avatar().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+                byte[] bytesImage = byteArrayOutputStream.toByteArray();
+                bytesImage = imagemTratada(bytesImage);
+                cv.put(KEY_AVATAR,bytesImage);
+            }
             // Put data
             cv.put(KEY_ID,user.get_id());
             cv.put(KEY_FULL_NAME,user.get_full_name());
@@ -122,7 +128,6 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
             cv.put(KEY_PHONE_NUMBER,user.get_phone_number());
             cv.put(KEY_PASSWORD,user.get_password());
             cv.put(KEY_ROLE,user.get_role());
-            cv.put(KEY_AVATAR,bytesImage);
             cv.put(KEY_STATUS,user.get_status());
 
             //insert data into sqlite
@@ -178,8 +183,10 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
             user.set_role(cursor.getInt(iRole));
             // convert byte[] to bitmap
             byte[] bytesImage =cursor.getBlob(iAvatar);
-            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
-            user.set_avatar(bitmapImage);
+            if (bytesImage != null) {
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+                user.set_avatar(bitmapImage);
+            }
             //
             user.set_status(cursor.getInt(iStatus));
         }
