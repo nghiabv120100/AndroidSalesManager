@@ -31,6 +31,7 @@ public class CartItemDatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         dbProduct = new ProductDatabaseHandler(context);
 //        onCreate(this.getWritableDatabase());
+
     }
 
     @Override
@@ -84,7 +85,7 @@ public class CartItemDatabaseHandler extends SQLiteOpenHelper {
 
             for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
 
-                Integer productId = cursor.getInt(cursor.getInt(iProductID));
+                Integer productId = cursor.getInt(iProductID);
 
                 CartItem cartItem = new CartItem();
                 cartItem.set_cart_id(cursor.getInt(iCartId));

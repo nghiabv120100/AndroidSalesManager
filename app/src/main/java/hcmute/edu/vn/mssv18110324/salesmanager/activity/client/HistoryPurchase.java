@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -23,11 +24,10 @@ import hcmute.edu.vn.mssv18110324.salesmanager.utils.CartDatabaseHandler;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.CartItemDatabaseHandler;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
 
-public class HistoryPurchase extends AppCompatActivity implements HistoryPurchaseAdapter.IOrderClicked {
+public class HistoryPurchase extends AppCompatActivity  implements HistoryPurchaseAdapter.IOrderClicked {
     RecyclerView recyclerView;
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager manager;
-    View view;
     ArrayList<Cart> lstCart;
 
     Integer id;
@@ -50,10 +50,10 @@ public class HistoryPurchase extends AppCompatActivity implements HistoryPurchas
         recyclerView.setAdapter(myAdapter);
     }
 
-
     @Override
     public void onOrderClicked(Integer id) {
-        CartItemDatabaseHandler db = new CartItemDatabaseHandler(this);
-        ArrayList<CartItem> lstCartItem = db.getByCartID(id);
+        Intent intent = new Intent(this,DetailOrder.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
     }
 }

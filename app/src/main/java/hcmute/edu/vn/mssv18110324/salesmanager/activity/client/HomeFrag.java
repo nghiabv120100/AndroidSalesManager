@@ -58,8 +58,6 @@ public class HomeFrag extends Fragment {
     public void onPause() {
         super.onPause();
         Log.d("onPauseHome","PauseHome");
-
-
     }
 
 }

@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,6 +84,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
                 invalidateOptionsMenu();
             }
         });
+
+
 
       /*  Bitmap icon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.cafe_milk);
@@ -254,7 +257,18 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         navController.showFragmentDetailProduct();
     }
 
-///Insert data
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Log.d("Back:","clicked_back");
+            // your code
+            return true;
+        }
+        Log.d("Back:","No");
+        return super.onKeyDown(keyCode, event);
+    }
+
+    ///Insert data
     public void addCategory(Bitmap bitmap) {
 //        Bitmap bitmap = ((BitmapDrawable)getResources().getDrawable(R.drawable.ancol)).getBitmap();
 

@@ -67,7 +67,7 @@ public class HistoryPurchaseAdapter extends RecyclerView.Adapter<HistoryPurchase
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    itemClicked.onOrderClicked(((Cart)itemView.getTag()).get_id());
                 }
             });
 
