@@ -2,6 +2,7 @@ package hcmute.edu.vn.mssv18110324.salesmanager.activity.client;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +18,7 @@ public class NavController extends AppCompatActivity  {
     }
 
     public void showFragmentHome() {
+
         manager.beginTransaction()
                 .hide(manager.findFragmentById(R.id.fragListCategory))
                 .hide(manager.findFragmentById(R.id.fragListProduct))

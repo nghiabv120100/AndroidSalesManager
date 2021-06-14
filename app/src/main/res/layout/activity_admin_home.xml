@@ -21,6 +21,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Quản lý sản phẩm"
+        android:background="@drawable/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
@@ -33,6 +34,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Quản lý danh mục"
+        android:background="@drawable/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
@@ -45,6 +47,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Quản lý đơn hàng"
+        android:background="@drawable/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
@@ -57,6 +60,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Quản lý người dùng"
+        android:background="@drawable/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
@@ -69,6 +73,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="Đăng xuất"
+        android:background="@drawable/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -41,6 +43,12 @@ public class ListCategoryFrag extends Fragment {
     ArrayList<Category> lstCategory;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -62,5 +70,12 @@ public class ListCategoryFrag extends Fragment {
         myAdapter = new CategoryAdapter(activity,lstCategory);
         recyclerView.setAdapter(myAdapter);
 
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        menuItem.setVisible(false);
     }
 }

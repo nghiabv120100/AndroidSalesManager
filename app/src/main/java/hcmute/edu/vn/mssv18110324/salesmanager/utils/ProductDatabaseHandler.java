@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import androidx.annotation.Nullable;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -197,5 +198,47 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             product.set_status(cursor.getInt(iStatus));
         }
         return product;
+    }
+
+
+    public ArrayList<Product> findByKeyword(String keyword) {
+        ArrayList<Product> lstProduct = new ArrayList<Product>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select * From " + TABLE_PRODUCT + " Where " +KEY_NAME +" Like '%"+keyword+"%'";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+
+
+        int iID = cursor.getColumnIndex(KEY_ID);
+        int iName = cursor.getColumnIndex(KEY_NAME);
+        int iPrice = cursor.getColumnIndex(KEY_PRICE);
+        int iDescribe = cursor.getColumnIndex(KEY_DESCRIBE);
+        int iImage = cursor.getColumnIndex(KEY_IMAGE);
+        int iCategoryID = cursor.getColumnIndex(KEY_CATEGORY_ID);
+        int iStatus = cursor.getColumnIndex(KEY_STATUS);
+
+
+        for (cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
+            Product product = new Product();
+
+            product.set_id(cursor.getInt(iID));
+            product.set_name(cursor.getString(iName));
+            product.set_price(cursor.getInt(iPrice));
+            product.set_describe(cursor.getString(iDescribe));
+
+            // convert byte to bitmap
+            byte[] bytesImage = cursor.getBlob(iImage);
+            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+            product.set_image(bitmapImage);
+
+            product.set_category_id(cursor.getInt(iCategoryID));
+            product.set_status(cursor.getInt(iStatus));
+
+            lstProduct.add(product);
+        }
+
+        return lstProduct;
     }
 }

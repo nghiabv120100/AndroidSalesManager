@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     tools:context=".activity.client.NavbarFlag">
 
@@ -10,14 +10,14 @@
     <LinearLayout
         android:id="@+id/linearToggle"
         android:layout_width="120sp"
-        android:layout_height="70sp"
+        android:layout_height="50sp"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         >
         <ImageButton
             android:id="@+id/btnToggle"
             android:layout_width="50sp"
-            android:layout_height="40sp"
+            android:layout_height="35sp"
             android:layout_gravity="center"
             android:background="@drawable/category_icon"
             android:scaleType="fitXY"
@@ -37,14 +37,14 @@
     <LinearLayout
         android:id="@+id/linearHome"
         android:layout_width="120sp"
-        android:layout_height="70sp"
+        android:layout_height="50sp"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         >
         <ImageButton
             android:id="@+id/btnHome"
             android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:background="@drawable/home"
             android:scaleType="fitXY"
@@ -65,14 +65,14 @@
     <LinearLayout
         android:id="@+id/linearPersonal"
         android:layout_width="120sp"
-        android:layout_height="70sp"
+        android:layout_height="50sp"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         >
         <ImageButton
             android:id="@+id/btnPersonalInfo"
             android:layout_width="50sp"
-            android:layout_height="40sp"
+            android:layout_height="35sp"
             android:layout_gravity="center"
             android:background="@drawable/person"
             android:scaleType="fitXY"

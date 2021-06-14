@@ -28,7 +28,7 @@ public class AdminCategoryActivity extends AppCompatActivity implements Category
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_category);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         addControls();
         addEvents();
     }

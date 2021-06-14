@@ -11,15 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SalesManager">
-        <activity android:name=".activity.admin.AdminProductActionActivity"></activity>
-        <activity android:name=".activity.admin.AdminProductActivity" />
-        <activity android:name=".activity.admin.AdminCategoryActionActivity" />
-        <activity android:name=".activity.admin.AdminCategoryActivity" />
+        <activity android:name=".activity.admin.AdminProductActionActivity"
+                  android:parentActivityName=".activity.admin.AdminProductActivity"></activity>
+        <activity android:name=".activity.admin.AdminProductActivity"
+                  android:parentActivityName=".activity.admin.AdminHomeActivity"  />
+        <activity android:name=".activity.admin.AdminCategoryActionActivity"
+                  android:parentActivityName=".activity.admin.AdminCategoryActivity" />
+        <activity android:name=".activity.admin.AdminCategoryActivity"
+                  android:parentActivityName=".activity.admin.AdminHomeActivity"/>
         <activity android:name=".activity.admin.AdminHomeActivity" />
         <activity android:name=".activity.client.DetailOrder" />
         <activity android:name=".activity.client.HistoryPurchase" />
         <activity android:name=".activity.client.ChangePasswordActivity" />
-        <activity android:name=".activity.client.PersonalInfoActivity" />
+        <activity android:name=".activity.client.PersonalInfoActivity">
+
+        </activity>
         <activity android:name=".activity.client.HomeActivity" />
         <activity android:name=".activity.ResetPassword" />
         <activity android:name=".activity.MainActivity" />

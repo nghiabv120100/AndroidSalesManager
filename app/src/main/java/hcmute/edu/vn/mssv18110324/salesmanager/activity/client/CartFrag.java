@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -65,7 +67,12 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
         deleteItem = (CartItemAdapter.DeleteItem) this;
         fragmentActivity = (FragmentActivity)context;
         navController = new NavController(fragmentActivity.getSupportFragmentManager());
-//        deleteItem=this::deleteItem;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -151,4 +158,10 @@ public class CartFrag extends Fragment implements CartItemAdapter.DeleteItem {
         shopViewModel.changeQuantity(cartItem,quantity);
     }
 
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem menuItem = menu.findItem(R.id.search);
+        menuItem.setVisible(false);
+    }
 }

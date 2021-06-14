@@ -34,6 +34,7 @@ public class AdminProductActivity extends AppCompatActivity implements ProductAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_product);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         addControls();
         addEvents();
     }

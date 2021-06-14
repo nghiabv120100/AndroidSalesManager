@@ -139,12 +139,41 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             }
         };
 
+
         final MenuItem menuItemSearch = menu.findItem(R.id.search);
         menuItemSearch.setOnActionExpandListener(onActionExpandListener);
         SearchView searchView = (SearchView) menuItemSearch.getActionView();
         searchView.setQueryHint("Search date here....");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            ArrayList<Product> lstProduct;
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                lstProduct = dbProduct.findByKeyword(query);
+                myAdapter = new ProductAdapter(HomeActivity.this,lstProduct);
+                recyclerView.setAdapter(myAdapter);
+                navController.showFragmentProduct();
+                searchView.clearFocus(); // hide keyboard
+//                searchView.setQuery("", false);
+                searchView.setFocusable(false);
+                menuItemSearch.collapseActionView();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                lstProduct = dbProduct.findByKeyword(newText);
+                myAdapter = new ProductAdapter(HomeActivity.this,lstProduct);
+                recyclerView.setAdapter(myAdapter);
+                return true;
+            }
+        });
+
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -180,9 +209,10 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             @Override
             public void onClick(View v) {
                 navController.showFragmentHome();
-                linearHome.setBackgroundColor(Color.rgb(255,224,178));
+//                linearHome.setBackgroundColor(Color.rgb(255,224,178));
                 linearPersonal.setBackgroundColor(Color.WHITE);
                 linearToggle.setBackgroundColor(Color.WHITE);
+                linearHome.setBackground(getResources().getDrawable(R.drawable.image_nav));
             }
         });
 
@@ -192,7 +222,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
                 navController.showFragmentListCategory();
                 linearHome.setBackgroundColor(Color.WHITE);
                 linearPersonal.setBackgroundColor(Color.WHITE);
-                linearToggle.setBackgroundColor(Color.rgb(255,224,178));
+//                linearToggle.setBackgroundColor(Color.rgb(255,224,178));
+                linearToggle.setBackground(getResources().getDrawable(R.drawable.image_nav));
             }
         });
 
@@ -201,8 +232,9 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             public void onClick(View v) {
                 navController.showFragmentPersonalInfo();
                 linearHome.setBackgroundColor(Color.WHITE);
-                linearPersonal.setBackgroundColor(Color.rgb(255,224,178));
+//                linearPersonal.setBackgroundColor(Color.rgb(255,224,178));
                 linearToggle.setBackgroundColor(Color.WHITE);
+                linearPersonal.setBackground(getResources().getDrawable(R.drawable.image_nav));
             }
         });
 
@@ -212,16 +244,18 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
                 navController.showFragmentListCategory();
                 linearHome.setBackgroundColor(Color.WHITE);
                 linearPersonal.setBackgroundColor(Color.WHITE);
-                linearToggle.setBackgroundColor(Color.rgb(255,224,178));
+//                linearToggle.setBackgroundColor(Color.rgb(255,224,178));
+                linearToggle.setBackground(getResources().getDrawable(R.drawable.image_nav));
             }
         });
         linearHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController.showFragmentHome();
-                linearHome.setBackgroundColor(Color.rgb(255,224,178));
+//                linearHome.setBackgroundColor(Color.rgb(255,224,178));
                 linearPersonal.setBackgroundColor(Color.WHITE);
                 linearToggle.setBackgroundColor(Color.WHITE);
+                linearHome.setBackground(getResources().getDrawable(R.drawable.image_nav));
             }
         });
         linearPersonal.setOnClickListener(new View.OnClickListener() {
@@ -229,8 +263,9 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             public void onClick(View v) {
                 navController.showFragmentPersonalInfo();
                 linearHome.setBackgroundColor(Color.WHITE);
-                linearPersonal.setBackgroundColor(Color.rgb(255,224,178));
+//                linearPersonal.setBackgroundColor(Color.rgb(255,224,178));
                 linearToggle.setBackgroundColor(Color.WHITE);
+                linearPersonal.setBackground(getResources().getDrawable(R.drawable.image_nav));
             }
         });
 
