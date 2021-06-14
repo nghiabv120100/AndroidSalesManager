@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -122,12 +123,34 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             }
         });
 
+
+        //menu search
+        MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Toast.makeText(HomeActivity.this,"Search is Expanded",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Toast.makeText(HomeActivity.this,"Search is Collapse",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        };
+
+        final MenuItem menuItemSearch = menu.findItem(R.id.search);
+        menuItemSearch.setOnActionExpandListener(onActionExpandListener);
+        SearchView searchView = (SearchView) menuItemSearch.getActionView();
+        searchView.setQueryHint("Search date here....");
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        navController.showFragmentCart();
+        String sTitle = item.getTitle().toString();
+        if (sTitle.equals("Cart"))
+            navController.showFragmentCart();
         return true;
     }
 
