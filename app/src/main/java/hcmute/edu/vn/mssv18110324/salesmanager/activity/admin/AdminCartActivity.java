@@ -1,4 +1,4 @@
-package hcmute.edu.vn.mssv18110324.salesmanager.activity.client;
+package hcmute.edu.vn.mssv18110324.salesmanager.activity.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,11 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ClipData;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,47 +17,40 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
-import hcmute.edu.vn.mssv18110324.salesmanager.activity.Login;
-import hcmute.edu.vn.mssv18110324.salesmanager.adapter.CategoryAdapter;
+import hcmute.edu.vn.mssv18110324.salesmanager.activity.client.DetailOrder;
+import hcmute.edu.vn.mssv18110324.salesmanager.activity.client.HistoryPurchase;
 import hcmute.edu.vn.mssv18110324.salesmanager.adapter.HistoryPurchaseAdapter;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Cart;
-import hcmute.edu.vn.mssv18110324.salesmanager.models.CartItem;
-import hcmute.edu.vn.mssv18110324.salesmanager.models.Category;
 import hcmute.edu.vn.mssv18110324.salesmanager.utils.CartDatabaseHandler;
-import hcmute.edu.vn.mssv18110324.salesmanager.utils.CartItemDatabaseHandler;
-import hcmute.edu.vn.mssv18110324.salesmanager.utils.CategoryDatabaseHandler;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class HistoryPurchase extends AppCompatActivity  implements HistoryPurchaseAdapter.IOrderClicked {
+public class AdminCartActivity extends AppCompatActivity implements HistoryPurchaseAdapter.IOrderClicked {
     RecyclerView recyclerView;
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager manager;
     ArrayList<Cart> lstCart;
 
     CartDatabaseHandler db;
-    Integer id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_purchase);
-        SharedPreferences pref = getSharedPreferences(Login.MY_PREFS_FILENAME, Context.MODE_PRIVATE);
-        id = pref.getInt("userId",-1);
+        setContentView(R.layout.activity_admin_cart);
+
         db = new CartDatabaseHandler(this);
-        recyclerView =  findViewById(R.id.recyclerHistoryPurchase);
+        recyclerView =  findViewById(R.id.recyclerOrder);
         recyclerView.setHasFixedSize(true);
 //        manager = new GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL,false);
         manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         lstCart = new ArrayList<Cart>();
-        lstCart = db.getCartByCustomerID(id);
+        lstCart = db.getAll();
         myAdapter = new HistoryPurchaseAdapter(this,lstCart);
         recyclerView.setAdapter(myAdapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
-
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -99,7 +88,7 @@ public class HistoryPurchase extends AppCompatActivity  implements HistoryPurcha
 
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-            new RecyclerViewSwipeDecorator.Builder(HistoryPurchase.this,c,recyclerView,viewHolder,dX,dY,actionState,isCurrentlyActive)
+            new RecyclerViewSwipeDecorator.Builder(AdminCartActivity.this,c,recyclerView,viewHolder,dX,dY,actionState,isCurrentlyActive)
                     .addSwipeLeftBackgroundColor(Color.rgb(255,152,0))
                     .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
                     .create()
@@ -110,11 +99,9 @@ public class HistoryPurchase extends AppCompatActivity  implements HistoryPurcha
 
 
 
-
-
     @Override
     public void onOrderClicked(Integer id) {
-        Intent intent = new Intent(this,DetailOrder.class);
+        Intent intent = new Intent(this, DetailOrder.class);
         intent.putExtra("id",id);
         startActivity(intent);
     }

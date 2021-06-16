@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         addCategory(icon);
         addProduct(icon);
         */
-        navController.showFragmentProduct();
+        navController.showFragmentHome();
     }
 
     @Override

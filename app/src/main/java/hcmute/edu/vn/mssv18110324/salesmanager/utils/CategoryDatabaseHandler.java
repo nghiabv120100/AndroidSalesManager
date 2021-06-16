@@ -151,7 +151,7 @@ public class CategoryDatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ArrayList<Category> lstCategory = new ArrayList<Category>();
 
-        String query = "Select * from "+ TABLE_CATEGORY;
+        String query = "Select * from "+ TABLE_CATEGORY +" Where "+ KEY_STATUS+" !=0" ;
 
 
         Cursor cursor = db.rawQuery(query, null);

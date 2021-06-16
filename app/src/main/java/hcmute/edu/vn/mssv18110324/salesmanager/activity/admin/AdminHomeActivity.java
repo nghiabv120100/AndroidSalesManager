@@ -58,6 +58,22 @@ public class AdminHomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        btnManagerOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AdminHomeActivity.this, AdminCartActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnManagerUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AdminHomeActivity.this, AdminUserActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 

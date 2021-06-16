@@ -140,19 +140,48 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public List<User> getAllUser() {
-        List<User> lstUser = new ArrayList<User>();
+    public ArrayList<User> getAllUser() {
+        ArrayList<User> lstUser = new ArrayList<User>();
         // Select All Query
         String query = "Select * From "+ TABLE_USER;
 
-        SQLiteDatabase db = this.getWritableDatabase(); //Why use getWritable but not getReadable
-        Cursor cursor = db.rawQuery(query,null);
+        try {
+            SQLiteDatabase db = this.getWritableDatabase(); //Why use getWritable but not getReadable
+            Cursor cursor = db.rawQuery(query,null);
 
-        for (cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
-            User user = new User();
+            int iID = cursor.getColumnIndex(KEY_ID);
+            int iFullName = cursor.getColumnIndex(KEY_FULL_NAME);
+            int iEmail = cursor.getColumnIndex(KEY_EMAIL);
+            int iPhoneNumber = cursor.getColumnIndex(KEY_PHONE_NUMBER);
+            int iPassword = cursor.getColumnIndex(KEY_PASSWORD);
+            int iRole = cursor.getColumnIndex(KEY_ROLE);
+            int iAvatar = cursor.getColumnIndex(KEY_AVATAR);
+            int iStatus = cursor.getColumnIndex(KEY_STATUS);
 
+            for (cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
+                User user = new User();
+                user.set_id(cursor.getInt(iID));
+                user.set_full_name(cursor.getString(iFullName));
+                user.set_email(cursor.getString(iEmail));
+                user.set_phone_number(cursor.getString(iPhoneNumber));
+                user.set_password(cursor.getString(iPassword));
+                user.set_role(cursor.getInt(iRole));
+                // convert byte[] to bitmap
+                byte[] bytesImage =cursor.getBlob(iAvatar);
+                if (bytesImage != null) {
+                    Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+                    user.set_avatar(bitmapImage);
+                }
+                //
+                user.set_status(cursor.getInt(iStatus));
+                lstUser.add(user);
+            }
+            return lstUser;
         }
-        return null;
+        catch (Exception e) {
+            return null;
+        }
+
     }
 
     public User getUserByEmail(String email) {

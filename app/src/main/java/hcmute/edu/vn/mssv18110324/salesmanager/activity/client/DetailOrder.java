@@ -24,13 +24,15 @@ public class DetailOrder extends AppCompatActivity {
     RecyclerView.Adapter myAdapter;
     RecyclerView.LayoutManager manager;
     ArrayList<CartItem> lstCartItem;
-    TextView txtTotalPrice;
+    TextView txtTotalPrice,txtTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_order);
 
+        txtTitle = findViewById(R.id.txtTitle);
+        txtTotalPrice = findViewById(R.id.txtTotalPrice);
 
     }
 
@@ -52,6 +54,8 @@ public class DetailOrder extends AppCompatActivity {
         myAdapter = new DetailOderAdapter(lstCartItem);
         recyclerView.setAdapter(myAdapter);
 
+        txtTitle.setText("Chi tiết đơn hàng #"+id);
+
         int totalPrice = 0;
         for (CartItem item:lstCartItem) {
             totalPrice += item.get_unit_price() * item.get_quantity();
@@ -60,8 +64,8 @@ public class DetailOrder extends AppCompatActivity {
         String sTotalPrice = formatter.format(totalPrice);
 
 
-        txtTotalPrice = findViewById(R.id.txtTotalPrice);
         txtTotalPrice.setText(sTotalPrice+"đ");
+
     }
 
 }
