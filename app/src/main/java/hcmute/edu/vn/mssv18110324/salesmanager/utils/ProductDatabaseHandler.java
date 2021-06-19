@@ -104,7 +104,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         ArrayList<Product> lstProduct = new ArrayList<Product>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * From "+TABLE_PRODUCT + " Where "+KEY_CATEGORY_ID +" = "+categoryID;
+        String query = "Select * From "+TABLE_PRODUCT + " Where "+KEY_STATUS +" != 0 "+" And " +KEY_CATEGORY_ID +" = "+categoryID;
         Cursor cursor = db.rawQuery(query,null);
 
         int iID = cursor.getColumnIndex(KEY_ID);
@@ -112,6 +112,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         int iPrice = cursor.getColumnIndex(KEY_PRICE);
         int iDescribe = cursor.getColumnIndex(KEY_DESCRIBE);
         int iImage = cursor.getColumnIndex(KEY_IMAGE);
+        int iQuantity = cursor.getColumnIndex(KEY_QUANTITY);
         int iCategoryID = cursor.getColumnIndex(KEY_CATEGORY_ID);
         int iStatus = cursor.getColumnIndex(KEY_STATUS);
         for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
@@ -120,11 +121,17 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             product.set_name(cursor.getString(iName));
             product.set_price(cursor.getInt(iPrice));
             product.set_describe(cursor.getString(iDescribe));
+            product.set_quantity(cursor.getInt(iQuantity));
 
             // convert byte to bitmap
-            byte[] bytesImage =cursor.getBlob(iImage);
-            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
-            product.set_image(bitmapImage);
+            try {
+                byte[] bytesImage =cursor.getBlob(iImage);
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+                product.set_image(bitmapImage);
+            } catch (Exception e) {
+
+            }
+
             product.set_category_id(cursor.getInt(iCategoryID));
             product.set_status(cursor.getInt(iStatus));
             lstProduct.add(product);
@@ -136,7 +143,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         ArrayList<Product> lstProduct = new ArrayList<Product>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "Select * From "+TABLE_PRODUCT;
+        String query = "Select * From "+TABLE_PRODUCT +" Where "+KEY_STATUS +" != 0 ";
         Cursor cursor = db.rawQuery(query,null);
 
         int iID = cursor.getColumnIndex(KEY_ID);
@@ -144,6 +151,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         int iPrice = cursor.getColumnIndex(KEY_PRICE);
         int iDescribe = cursor.getColumnIndex(KEY_DESCRIBE);
         int iImage = cursor.getColumnIndex(KEY_IMAGE);
+        int iQuantity = cursor.getColumnIndex(KEY_QUANTITY);
         int iCategoryID = cursor.getColumnIndex(KEY_CATEGORY_ID);
         int iStatus = cursor.getColumnIndex(KEY_STATUS);
         for(cursor.moveToFirst();!cursor.isAfterLast();cursor.moveToNext()) {
@@ -152,11 +160,16 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             product.set_name(cursor.getString(iName));
             product.set_price(cursor.getInt(iPrice));
             product.set_describe(cursor.getString(iDescribe));
+            product.set_quantity(cursor.getInt(iQuantity));
+            try {
+                // convert byte to bitmap
+                byte[] bytesImage =cursor.getBlob(iImage);
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+                product.set_image(bitmapImage);
+            } catch (Exception e) {
 
-            // convert byte to bitmap
-            byte[] bytesImage =cursor.getBlob(iImage);
-            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
-            product.set_image(bitmapImage);
+            }
+
 
             product.set_category_id(cursor.getInt(iCategoryID));
             product.set_status(cursor.getInt(iStatus));
@@ -168,7 +181,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
 
     public Product getByProductID(Integer id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * From " + TABLE_PRODUCT + " Where _id = '" + id + "'";
+        String query = "Select * From " + TABLE_PRODUCT + " Where _id = '" + id + "'"+ " And "+KEY_STATUS +" != 0 ";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -178,6 +191,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         int iPrice = cursor.getColumnIndex(KEY_PRICE);
         int iDescribe = cursor.getColumnIndex(KEY_DESCRIBE);
         int iImage = cursor.getColumnIndex(KEY_IMAGE);
+        int iQuantity = cursor.getColumnIndex(KEY_QUANTITY);
         int iCategoryID = cursor.getColumnIndex(KEY_CATEGORY_ID);
         int iStatus = cursor.getColumnIndex(KEY_STATUS);
 
@@ -188,12 +202,15 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             product.set_name(cursor.getString(iName));
             product.set_price(cursor.getInt(iPrice));
             product.set_describe(cursor.getString(iDescribe));
+            product.set_quantity(cursor.getInt(iQuantity));
+            try  {
+                // convert byte to bitmap
+                byte[] bytesImage = cursor.getBlob(iImage);
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+                product.set_image(bitmapImage);
+            } catch (Exception e) {
 
-            // convert byte to bitmap
-            byte[] bytesImage = cursor.getBlob(iImage);
-            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
-            product.set_image(bitmapImage);
-
+            }
             product.set_category_id(cursor.getInt(iCategoryID));
             product.set_status(cursor.getInt(iStatus));
         }
@@ -205,7 +222,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         ArrayList<Product> lstProduct = new ArrayList<Product>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * From " + TABLE_PRODUCT + " Where " +KEY_NAME +" Like '%"+keyword+"%'";
+        String query = "Select * From " + TABLE_PRODUCT + " Where "+KEY_STATUS +" != 0 "+" And " +KEY_NAME +" Like '%"+keyword+"%'";
 
         Cursor cursor = db.rawQuery(query, null);
 
@@ -214,6 +231,7 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         int iID = cursor.getColumnIndex(KEY_ID);
         int iName = cursor.getColumnIndex(KEY_NAME);
         int iPrice = cursor.getColumnIndex(KEY_PRICE);
+        int iQuantity = cursor.getColumnIndex(KEY_QUANTITY);
         int iDescribe = cursor.getColumnIndex(KEY_DESCRIBE);
         int iImage = cursor.getColumnIndex(KEY_IMAGE);
         int iCategoryID = cursor.getColumnIndex(KEY_CATEGORY_ID);
@@ -227,12 +245,16 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
             product.set_name(cursor.getString(iName));
             product.set_price(cursor.getInt(iPrice));
             product.set_describe(cursor.getString(iDescribe));
+            product.set_quantity(cursor.getInt(iQuantity));
 
             // convert byte to bitmap
-            byte[] bytesImage = cursor.getBlob(iImage);
-            Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
-            product.set_image(bitmapImage);
+            try {
+                byte[] bytesImage = cursor.getBlob(iImage);
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytesImage, 0, bytesImage.length);
+                product.set_image(bitmapImage);
+            } catch (Exception e) {
 
+            }
             product.set_category_id(cursor.getInt(iCategoryID));
             product.set_status(cursor.getInt(iStatus));
 
@@ -240,5 +262,35 @@ public class ProductDatabaseHandler extends SQLiteOpenHelper {
         }
 
         return lstProduct;
+    }
+
+    public int update(Product product) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            // convert bitmap to byte
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            product.get_image().compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+            byte[] bytesImage = byteArrayOutputStream.toByteArray();
+
+            bytesImage = imagemTratada(bytesImage);
+
+            ContentValues cv = new ContentValues();
+            cv.put(KEY_ID, product.get_id());
+            cv.put(KEY_NAME,product.get_name());
+            cv.put(KEY_QUANTITY,product.get_quantity());
+            cv.put(KEY_PRICE,product.get_price());
+            cv.put(KEY_DESCRIBE,product.get_describe());
+            cv.put(KEY_IMAGE,bytesImage);
+            cv.put(KEY_CATEGORY_ID,product.get_category_id());
+            cv.put(KEY_STATUS,product.get_status());
+
+            //insert data into sqlite
+            db.update(TABLE_PRODUCT, cv, "_id = ?", new String[]{product.get_id().toString()});
+            db.close();
+            return 1;
+        } catch (Exception e) {
+            db.close();
+            return -1;
+        }
     }
 }

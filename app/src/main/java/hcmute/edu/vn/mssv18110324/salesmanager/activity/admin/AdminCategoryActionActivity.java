@@ -41,14 +41,23 @@ public class AdminCategoryActionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         addControls();
         addEvents();
+        id = getIntent().getIntExtra("id",-1);
+        if (id != -1) {
+            Category category = dbCategory.findByID(id);
+            txtTitle.setText("Chỉnh sửa danh mục");
+            btnActionCategory.setText("Chỉnh sửa danh mục");
+            txtNameCategory.setText(category.get_name());
+            imgImageCategory.setImageBitmap(category.get_image());
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = getIntent();
+
+        /*Intent intent = getIntent();
         if (intent !=null) {
-            id = intent.getIntExtra("id",-1);
+            id = getIntent().getIntExtra("id",-1);
             if (id != -1) {
                 Category category = dbCategory.findByID(id);
                 txtTitle.setText("Chỉnh sửa danh mục");
@@ -56,7 +65,7 @@ public class AdminCategoryActionActivity extends AppCompatActivity {
                 txtNameCategory.setText(category.get_name());
                 imgImageCategory.setImageBitmap(category.get_image());
             }
-        }
+        }*/
     }
 
     private void pickImageFromGallery() {

@@ -43,7 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int id = lstCategory.get(lstCategory.indexOf(v.getTag())).get_id();
+                    int id = lstCategory.get(lstCategory.indexOf(itemView.getTag())).get_id();
                     activity.OnItemClicked(id);
                 }
             });

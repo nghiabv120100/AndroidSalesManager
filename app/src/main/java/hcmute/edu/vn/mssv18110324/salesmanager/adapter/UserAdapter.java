@@ -23,7 +23,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     UserClicked activity;
 
     public interface UserClicked {
-        void onUserClicked(int index);
+        void onUserClicked(User user);
     }
 
     public UserAdapter(Context context, ArrayList<User> lstUser) {
@@ -43,6 +43,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.itemView.setTag(lstUser.get(position));
         holder.txtFullName.setText(lstUser.get(position).get_full_name());
+        holder.imgAvatar.setImageBitmap(lstUser.get(position).get_avatar());
+        holder.txtPhoneNumber.setText(lstUser.get(position).get_phone_number());
         if (lstUser.get(position).get_role() == 1) {
             holder.txtRole.setText("Nhân viên");
         } else {
@@ -56,19 +58,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtFullName,txtRole;
+        TextView txtFullName,txtRole,txtPhoneNumber;
         ImageView imgAvatar;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtFullName = itemView.findViewById(R.id.txtFullName);
             txtRole = itemView.findViewById(R.id.txtRole);
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
-
+            txtPhoneNumber = itemView.findViewById(R.id.txtPhoneNumber);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  /*  int id = lstCategory.get(lstCategory.indexOf(v.getTag())).get_id();
-                    activity.OnItemClicked(id);*/
+                    activity.onUserClicked((User) v.getTag());
                 }
             });
 

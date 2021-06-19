@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_margin="8dp"
-            android:text="Total: $ 26"
+            android:text="Tổng tiền: $ 26"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
         <Button
@@ -40,8 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:layout_margin="8dp"
-            android:text="Place Order"
+            android:text="Thanh toán"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
 
     </LinearLayout>

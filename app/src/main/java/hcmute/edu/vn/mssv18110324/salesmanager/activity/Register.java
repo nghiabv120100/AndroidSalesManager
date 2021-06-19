@@ -128,8 +128,13 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 if (txtName.getText().toString().trim().isEmpty() || txtEmail.getText().toString().trim().isEmpty() ||
                         txtPassword.getText().toString().trim().isEmpty() || txtConfirmPassword.getText().toString().trim().isEmpty() ) {
-                    Toast.makeText(Register.this,"Please enter all details!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Register.this,"Vui lòng nhập đầy đủ các trường!",Toast.LENGTH_LONG).show();
                 } else {
+                    if (db.isExistEmail(txtEmail.getText().toString().trim()) > 0) {
+                        Toast.makeText(Register.this,"Email này đã tồn tại",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                     if (txtPassword.getText().toString().trim().equals(txtConfirmPassword.getText().toString().trim())) {
                         String name = txtName.getText().toString().trim();
                         String email = txtEmail.getText().toString().trim();
@@ -147,6 +152,7 @@ public class Register extends AppCompatActivity {
 
 
                         showProgress(true);
+
 
                         int result= db.addUser(user);
 

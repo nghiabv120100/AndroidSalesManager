@@ -36,10 +36,11 @@ public class AdminProductActionActivity extends AppCompatActivity implements Ada
 
     TextView txtTitle;
     ImageView imgImageProduct;
-    EditText txtNameProduct,txtPriceProduct,txtQuantity;
+    EditText txtNameProduct,txtPriceProduct,txtQuantity,txtDescribe;
     Button btnActionProduct;
 
     Integer id =-1; // id =-1: Add Product  ----- id != -1: Edit Product
+    Integer idCategory = -1;
 
     ArrayList<Category> lstCategory;
     Spinner spinnerCategory;
@@ -80,6 +81,9 @@ public class AdminProductActionActivity extends AppCompatActivity implements Ada
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_product_action);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        id =getIntent().getIntExtra("id",-1);
+
         addControls();
         addEvents();
     }
@@ -124,6 +128,7 @@ public class AdminProductActionActivity extends AppCompatActivity implements Ada
         txtPriceProduct = findViewById(R.id.txtPriceProduct);
         txtQuantity = findViewById(R.id.txtQuantity);
         btnActionProduct = findViewById(R.id.btnActionProduct);
+        txtDescribe = findViewById(R.id.txtDescribe);
 
         if (id == -1) {
             txtTitle.setText("Thêm sản phẩm");
@@ -132,6 +137,26 @@ public class AdminProductActionActivity extends AppCompatActivity implements Ada
                 @Override
                 public void onClick(View v) {
                     int result = addProduct();
+                    if (result != -1)
+                        AdminProductActionActivity.this.finish();
+                }
+            });
+        } else {
+            dbProduct = new ProductDatabaseHandler(this);
+            Product product = dbProduct.getByProductID(id);
+
+            imgImageProduct.setImageBitmap(product.get_image());
+            txtNameProduct.setText(product.get_name());
+            txtPriceProduct.setText(product.get_price()+"");
+            txtQuantity.setText(product.get_quantity()+"");
+            txtDescribe.setText(product.get_describe());
+
+            txtTitle.setText("Sửa sản phẩm");
+            btnActionProduct.setText("Sửa sản phẩm");
+            btnActionProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int result = update();
                     if (result != -1)
                         AdminProductActionActivity.this.finish();
                 }
@@ -150,7 +175,7 @@ public class AdminProductActionActivity extends AppCompatActivity implements Ada
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(AdminProductActionActivity.this,"itemm",Toast.LENGTH_SHORT).show();
+                idCategory = lstCategory.get(position).get_id();
             }
 
             @Override
@@ -167,6 +192,7 @@ public class AdminProductActionActivity extends AppCompatActivity implements Ada
         String sNameProduct = txtNameProduct.getText().toString().trim();
         String sPriceProduct = txtPriceProduct.getText().toString().trim();
         String sQuantity = txtQuantity.getText().toString().trim();
+        String sDescribe = txtDescribe.getText().toString().trim();
         Bitmap bm=((BitmapDrawable)imgImageProduct.getDrawable()).getBitmap();
         Product product = new Product();
 
@@ -182,13 +208,48 @@ public class AdminProductActionActivity extends AppCompatActivity implements Ada
             product.set_name(sNameProduct);
             product.set_price(Integer.parseInt(sPriceProduct));
             product.set_quantity(Integer.parseInt(sQuantity));
+            product.set_category_id(idCategory);
             product.set_image(bm);
+            product.set_describe(sDescribe);
             int idProduct= dbProduct.addProduct(product);
             Toast.makeText(this,"Thêm sản phẩm thành công",Toast.LENGTH_SHORT).show();
             return idProduct;
         }
         return -1;
 
+    }
+    private int update() {
+        dbProduct = new ProductDatabaseHandler(this);
+
+        String sNameProduct = txtNameProduct.getText().toString().trim();
+        String sPriceProduct = txtPriceProduct.getText().toString().trim();
+        String sQuantity = txtQuantity.getText().toString().trim();
+        String sDescribe = txtDescribe.getText().toString().trim();
+
+        Bitmap bm=((BitmapDrawable)imgImageProduct.getDrawable()).getBitmap();
+        Product product = new Product();
+
+        if (sNameProduct == null || sNameProduct.equals("") || sNameProduct.length() < 1 ) {
+            Toast.makeText(this,"Vui lòng nhập tên sản phẩm",Toast.LENGTH_SHORT).show();
+        } else if (sPriceProduct == null || sPriceProduct.equals("") || sPriceProduct.length() < 1 ) {
+            Toast.makeText(this,"Vui lòng nhập giá sản phẩm",Toast.LENGTH_SHORT).show();
+        } else if (sQuantity == null || sQuantity.equals("") || sQuantity.length() < 1 ) {
+            Toast.makeText(this,"Vui lòng nhập số lương sản phẩm",Toast.LENGTH_SHORT).show();
+        } else if (bm == null ) {
+            Toast.makeText(this,"Vui lòng chọn ảnh sản phẩm",Toast.LENGTH_SHORT).show();
+        } else {
+            product.set_id(id);
+            product.set_name(sNameProduct);
+            product.set_price(Integer.parseInt(sPriceProduct));
+            product.set_quantity(Integer.parseInt(sQuantity));
+            product.set_category_id(idCategory);
+            product.set_image(bm);
+            product.set_describe(sDescribe);
+            int idProduct= dbProduct.update(product);
+            Toast.makeText(this,"cập nhập sản phẩm thành công",Toast.LENGTH_SHORT).show();
+            return idProduct;
+        }
+        return -1;
     }
 
 

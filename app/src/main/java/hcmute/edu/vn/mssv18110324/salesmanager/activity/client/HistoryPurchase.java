@@ -62,7 +62,7 @@ public class HistoryPurchase extends AppCompatActivity  implements HistoryPurcha
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -91,8 +91,6 @@ public class HistoryPurchase extends AppCompatActivity  implements HistoryPurcha
                                     myAdapter.notifyItemInserted(position);
                                 }
                             }).show();
-                    break;
-                case ItemTouchHelper.RIGHT:
                     break;
             }
         }

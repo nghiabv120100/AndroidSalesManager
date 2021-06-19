@@ -64,7 +64,7 @@ public class DetailOrder extends AppCompatActivity {
         String sTotalPrice = formatter.format(totalPrice);
 
 
-        txtTotalPrice.setText(sTotalPrice+"đ");
+        txtTotalPrice.setText("Tổng tiền: "+sTotalPrice+"đ");
 
     }
 

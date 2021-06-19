@@ -1,6 +1,5 @@
 package hcmute.edu.vn.mssv18110324.salesmanager.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +16,14 @@ import java.util.ArrayList;
 import hcmute.edu.vn.mssv18110324.salesmanager.R;
 import hcmute.edu.vn.mssv18110324.salesmanager.models.Product;
 
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+public class ProductAdminAdapter extends RecyclerView.Adapter<ProductAdminAdapter.ViewHolder> {
     public ArrayList<Product> lstProduct;
     ProductClicked activity;
 
     public interface ProductClicked {
         void OnProductClicked(Product product);
     }
-    public ProductAdapter(Context context, ArrayList<Product> lstProduct) {
+    public ProductAdminAdapter(Context context, ArrayList<Product> lstProduct) {
         this.lstProduct = lstProduct;
         activity = (ProductClicked) context;
     }
@@ -32,13 +31,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imgImageProduct;
-        TextView txtNameProduct,txtPriceProduct;
+        TextView txtNameProduct,txtPriceProduct,txtDescribe;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgImageProduct = itemView.findViewById(R.id.imgImageProduct);
             txtNameProduct = itemView.findViewById(R.id.txtNameProduct);
             txtPriceProduct = itemView.findViewById(R.id.txtPriceProduct);
+            txtDescribe = itemView.findViewById(R.id.txtDescribe);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,13 +51,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
     @NonNull
     @Override
-    public ProductAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product,parent,false);
+    public ProductAdminAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_product_admin,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ProductAdminAdapter.ViewHolder holder, int position) {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
         String sPrice = formatter.format(lstProduct.get(position).get_price());
 
@@ -65,6 +65,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         holder.txtPriceProduct.setText(sPrice+" đ");
         holder.imgImageProduct.setImageBitmap(lstProduct.get(position).get_image());
         holder.txtNameProduct.setText(lstProduct.get(position).get_name());
+
+        String sDescribe ="";
+        try {
+            sDescribe=lstProduct.get(position).get_describe();
+        } catch (Exception e) {
+
+        }
+        holder.txtDescribe.setText(sDescribe+"");
     }
 
     @Override

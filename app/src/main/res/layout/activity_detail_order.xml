@@ -85,7 +85,8 @@
         android:id="@+id/txtTotalPrice"
         android:textSize="18dp"
         android:text="Tổng tiền: 10000đ"
-        android:layout_marginLeft="250dp"
+        android:layout_marginLeft="210dp"
+        android:textStyle="bold"
         android:textColor="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

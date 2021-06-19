@@ -143,7 +143,7 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<User> getAllUser() {
         ArrayList<User> lstUser = new ArrayList<User>();
         // Select All Query
-        String query = "Select * From "+ TABLE_USER;
+        String query = "Select * From "+ TABLE_USER +" Where "+ KEY_STATUS +" !=0";
 
         try {
             SQLiteDatabase db = this.getWritableDatabase(); //Why use getWritable but not getReadable
@@ -188,7 +188,7 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         String[] columns = new String[] {KEY_ID,KEY_FULL_NAME,KEY_EMAIL,KEY_PHONE_NUMBER,KEY_PASSWORD,KEY_ROLE,KEY_AVATAR,KEY_STATUS};
 
         SQLiteDatabase db = this.getReadableDatabase();
-        String query ="Select * From "+ TABLE_USER+ " Where _email = '"+email+ "'";
+        String query ="Select * From "+ TABLE_USER+ " Where _email = '"+email+ "'" +" and "+ KEY_STATUS +"!= 0";
 
         Cursor cursor= db.rawQuery(query,null);
 
@@ -258,5 +258,11 @@ public class UserDatabaseHandler extends SQLiteOpenHelper {
         return user;
     }
 
+    public int isExistEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query ="Select * From "+ TABLE_USER+ " Where _email = '"+email.trim()+ "'";
+        Cursor cursor= db.rawQuery(query,null);
+        return cursor.getCount();
+    }
 
 }

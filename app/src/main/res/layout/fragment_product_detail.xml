@@ -39,7 +39,7 @@
             android:layout_height="4dp"/>
         <TextView
             android:id="@+id/txtStatus"
-            android:text="Available / Out of stock"
+            android:text="Còn hàng"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             android:textColor="@color/colorPrimary"
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"/>
         <TextView
-            android:text="Description"
+            android:text="Mô tả"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/black"
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:id="@+id/btnAddToCart"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:enabled="true"
-            android:text="Add to cart"
+            android:text="Thêm vào giỏ hàng"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"

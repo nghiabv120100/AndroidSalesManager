@@ -128,13 +128,13 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                Toast.makeText(HomeActivity.this,"Search is Expanded",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this,"Search is Expanded",Toast.LENGTH_SHORT).show();
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                Toast.makeText(HomeActivity.this,"Search is Collapse",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeActivity.this,"Search is Collapse",Toast.LENGTH_SHORT).show();
                 return true;
             }
         };
@@ -163,10 +163,15 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                lstProduct = dbProduct.findByKeyword(newText);
-                myAdapter = new ProductAdapter(HomeActivity.this,lstProduct);
-                recyclerView.setAdapter(myAdapter);
-                return true;
+                HomeFrag homeFragment = (HomeFrag) getSupportFragmentManager().findFragmentById(R.id.fragHome);
+//                ListProductFrag listProductFrag = (ListProductFrag) getSupportFragmentManager().findFragmentById(R.id.fragListProduct);
+                if (homeFragment != null && homeFragment.isVisible()) {
+                    lstProduct = dbProduct.findByKeyword(newText);
+                    myAdapter = new ProductAdapter(HomeActivity.this,lstProduct);
+                    recyclerView.setAdapter(myAdapter);
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -287,8 +292,8 @@ public class HomeActivity extends AppCompatActivity implements CategoryAdapter.I
         }
     }
     @Override
-    public void OnProductClicked(int index) {
-        Product product= ProductAdapter.lstProduct.get(index);
+    public void OnProductClicked(Product product) {
+//        Product product= ProductAdapter.lstProduct.get(index);
         imgProductDetail.setImageBitmap(product.get_image());
         txtNameProductDetail.setText(product.get_name());
 //        txtStatus.setText();

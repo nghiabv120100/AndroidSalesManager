@@ -18,4 +18,8 @@
         <item>4</item>
         <item>5(max)</item>
     </string-array>
+    <string-array name="role_string_array">
+        <item>Khách hàng</item>
+        <item>Nhân viên</item>
+    </string-array>
 </resources>
